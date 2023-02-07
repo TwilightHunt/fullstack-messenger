@@ -1,0 +1,22 @@
+@import url("./base.css");
+
+[data-theme="light"] {
+  --color-background: var(--vt-c-white);
+  --color-background-soft: var(--vt-c-white-soft);
+  --color-background-mute: var(--vt-c-white-mute);
+
+  --color-heading: var(--vt-c-text-light-2);
+  --color-text: var(--vt-c-text-light-1);
+
+  --auth-bg-img: url("./images/backgrounds/background-light.jpg");
+}
+[data-theme="dark"] {
+  --color-background: var(--vt-c-black);
+  --color-background-soft: var(--vt-c-black-soft);
+  --color-background-mute: var(--vt-c-black-mute);
+
+  --color-heading: var(--vt-c-text-dark-2);
+  --color-text: var(--vt-c-text-dark-1);
+
+  --auth-bg-img: url("./images/backgrounds/background-dark.jpg");
+}
