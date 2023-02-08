@@ -14,14 +14,16 @@
             class="auth-box__input"
             id="login"
             placeholder="Email or username"
+            v-model="data.login"
           />
           <input
             type="password"
             class="auth-box__input"
             id="password"
             placeholder="Password"
+            v-model="data.password"
           />
-          <ActionBtn class="auth-box__button">Login</ActionBtn>
+          <ActionBtn @click="onLogin" class="auth-box__button">Login</ActionBtn>
           <ActionBtn class="auth-box__button_black"
             >Create a new account</ActionBtn
           >
@@ -32,7 +34,22 @@
 </template>
 
 <script setup>
+import { reactive } from "vue";
+import { storeToRefs } from "pinia";
 import ActionBtn from "../components/UI/action-btn.vue";
+
+import { useUserStore } from "../stores/user.js";
+const userStore = useUserStore();
+const { user } = storeToRefs(useUserStore());
+
+const data = reactive({
+  login: "",
+  password: "",
+});
+
+const onLogin = async () => {
+  await userStore.signIn(data.login, data.password);
+};
 </script>
 
 <style lang="scss" scoped>

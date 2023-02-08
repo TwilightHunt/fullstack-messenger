@@ -3,14 +3,13 @@ import { reactive, toRefs } from "vue";
 
 export const useFetch = (url, config = {}) => {
   const state = reactive({
-    response: [],
+    response: {},
     error: null,
     fetching: true,
   });
   const fetchData = async () => {
     try {
       const res = await axios.request({ url, ...config });
-      console.log(res.data.user);
       state.response = res.data.user;
     } catch (error) {
       state.error = error;

@@ -1,12 +1,17 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
+import { reactive, toRefs } from "vue";
+import { defineStore } from "pinia";
+import useAuth from "../composables/useAuth.js";
 
-export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
-  }
+export const useUserStore = defineStore("user", () => {
+  const state = reactive({ user: {} });
+  const signIn = async (login, password) => {
+    try {
+      const { data } = await useAuth.login({ login, password });
+      state.user = data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  return { count, doubleCount, increment }
-})
+  return { ...toRefs(state), signIn };
+});
