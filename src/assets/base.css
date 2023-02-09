@@ -21,7 +21,11 @@
   margin: 0;
   font-weight: normal;
 }
-
+a:-webkit-any-link {
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: none;
+}
 body {
   min-height: 100vh;
   color: var(--color-text);

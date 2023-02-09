@@ -13,7 +13,6 @@ setBodyTheme();
 </script>
 
 <template>
-  <Auth />
   <RouterView />
 </template>
 
