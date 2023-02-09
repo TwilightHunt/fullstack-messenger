@@ -5,12 +5,13 @@ import useAuth from "../composables/useAuth.js";
 export const useUserStore = defineStore("user", () => {
   const state = reactive({ user: {} });
   const signIn = async (login, password) => {
-    try {
-      const { data } = await useAuth.login({ login, password });
-      state.user = data;
-    } catch (error) {
-      console.log(error);
+    const { data, error } = await useAuth.login({ login, password });
+    if (error.value) {
+      const errorMessage = error.value.response.data.error;
+      throw new Error(errorMessage);
     }
+    state.user = data;
+    return state.user;
   };
 
   return { ...toRefs(state), signIn };

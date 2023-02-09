@@ -35,12 +35,10 @@
 
 <script setup>
 import { reactive } from "vue";
-import { storeToRefs } from "pinia";
 import ActionBtn from "../components/UI/action-btn.vue";
 
 import { useUserStore } from "../stores/user.js";
 const userStore = useUserStore();
-const { user } = storeToRefs(useUserStore());
 
 const data = reactive({
   login: "",
@@ -48,7 +46,12 @@ const data = reactive({
 });
 
 const onLogin = async () => {
-  await userStore.signIn(data.login, data.password);
+  try {
+    const user = await userStore.signIn(data.login, data.password);
+    console.log(user);
+  } catch (error) {
+    alert(error);
+  }
 };
 </script>
 

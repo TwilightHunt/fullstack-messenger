@@ -4,7 +4,7 @@ import { useFetch } from "./useFetch.js";
 const baseUrl = `${import.meta.env.VITE_SERVER_URL}/api`;
 
 export default {
-  login({ login, password }) {
+  async login({ login, password }) {
     let user = reactive({ data: {}, error: null, fetching: false });
     const { response, error, fetching, fetchData } = useFetch(
       `${baseUrl}/login`,
@@ -19,7 +19,7 @@ export default {
         },
       }
     );
-    fetchData();
+    await fetchData();
     user.data = response;
     user.error = error;
     user.fetching = fetching;
