@@ -10,7 +10,7 @@ export const useFetch = (url, config = {}) => {
   const fetchData = async () => {
     try {
       const res = await axios.request({ url, ...config });
-      state.response = res.data.user;
+      state.response = res.data;
     } catch (error) {
       state.error = error;
     } finally {

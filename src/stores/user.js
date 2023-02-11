@@ -4,8 +4,24 @@ import useAuth from "../composables/useAuth.js";
 
 export const useUserStore = defineStore("user", () => {
   const state = reactive({ user: {} });
-  const signIn = async (login, password) => {
+  const signIn = async (loginData) => {
+    const { login, password } = loginData;
     const { data, error } = await useAuth.login({ login, password });
+    if (error.value) {
+      const errorMessage = error.value.response.data.error;
+      throw new Error(errorMessage);
+    }
+    state.user = data.value.user;
+    return state.user;
+  };
+  const signUp = async (registrationData) => {
+    const { email, username, password, repeatPassword } = registrationData;
+    const { data, error } = await useAuth.register({
+      email,
+      username,
+      password,
+      repeatPassword,
+    });
     if (error.value) {
       const errorMessage = error.value.response.data.error;
       throw new Error(errorMessage);
@@ -14,5 +30,5 @@ export const useUserStore = defineStore("user", () => {
     return state.user;
   };
 
-  return { ...toRefs(state), signIn };
+  return { ...toRefs(state), signIn, signUp };
 });

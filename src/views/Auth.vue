@@ -19,14 +19,14 @@
               class="auth-box__input"
               id="login"
               placeholder="Email or username"
-              v-model="data.login"
+              v-model="loginData.login"
             />
             <input
               type="password"
               class="auth-box__input"
               id="password_login"
               placeholder="Password"
-              v-model="data.password"
+              v-model="loginData.password"
             />
             <ActionBtn @click="onLogin" class="auth-box__button"
               >Login</ActionBtn
@@ -48,30 +48,32 @@
               class="auth-box__input"
               id="email"
               placeholder="Email"
-              v-model="data.login"
+              v-model="registerData.email"
             />
             <input
               type="text"
               class="auth-box__input"
               id="username"
               placeholder="Username"
-              v-model="data.login"
+              v-model="registerData.username"
             />
             <input
               type="password"
               class="auth-box__input"
               id="password_register"
               placeholder="Password"
-              v-model="data.password"
+              v-model="registerData.password"
             />
             <input
               type="password"
               class="auth-box__input"
               id="repeat-password"
               placeholder="Repeat password"
-              v-model="data.password"
+              v-model="registerData.repeatPassword"
             />
-            <ActionBtn class="auth-box__button">Sign Up</ActionBtn>
+            <ActionBtn class="auth-box__button" @click="onRegister"
+              >Sign Up</ActionBtn
+            >
             <router-link to="/login"
               ><ActionBtn class="auth-box__button_black"
                 >Already have an account?</ActionBtn
@@ -91,14 +93,28 @@ import ActionBtn from "../components/UI/action-btn.vue";
 import { useUserStore } from "../stores/user.js";
 const userStore = useUserStore();
 
-const data = reactive({
+const loginData = reactive({
   login: "",
   password: "",
+});
+const registerData = reactive({
+  email: "",
+  username: "",
+  password: "",
+  repeatPassword: "",
 });
 
 const onLogin = async () => {
   try {
-    const user = await userStore.signIn(data.login, data.password);
+    const user = await userStore.signIn(loginData);
+    console.log(user.email);
+  } catch (error) {
+    alert(error);
+  }
+};
+const onRegister = async () => {
+  try {
+    const user = await userStore.signUp(registerData);
     console.log(user);
   } catch (error) {
     alert(error);
@@ -146,7 +162,6 @@ const onLogin = async () => {
   flex-direction: column;
   justify-content: center;
 }
-
 .auth-box__button {
   color: var(--color-text);
   border: 1px solid #333;
