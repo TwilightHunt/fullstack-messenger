@@ -1,6 +1,5 @@
 <script setup>
 import { RouterView } from "vue-router";
-import Auth from "./views/Auth.vue";
 
 const setBodyTheme = () => {
   const body = document.body;
@@ -11,7 +10,6 @@ const setBodyTheme = () => {
 
 setBodyTheme();
 </script>
-
 <template>
   <RouterView />
 </template>

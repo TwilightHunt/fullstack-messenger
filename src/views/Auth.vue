@@ -88,10 +88,13 @@
 
 <script setup>
 import { reactive } from "vue";
+import { useRouter } from "vue-router";
 import ActionBtn from "../components/UI/action-btn.vue";
 
 import { useUserStore } from "../stores/user.js";
 const userStore = useUserStore();
+
+const router = useRouter();
 
 const loginData = reactive({
   login: "",
@@ -107,15 +110,20 @@ const registerData = reactive({
 const onLogin = async () => {
   try {
     const user = await userStore.signIn(loginData);
-    console.log(user.email);
+    console.log(user);
+    router.push("/");
   } catch (error) {
     alert(error);
   }
 };
 const onRegister = async () => {
   try {
+    if (registerData.password !== registerData.repeatPassword) {
+      throw new Error("Passwords are not same");
+    }
     const user = await userStore.signUp(registerData);
     console.log(user);
+    router.push("/");
   } catch (error) {
     alert(error);
   }
