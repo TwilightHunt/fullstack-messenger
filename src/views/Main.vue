@@ -17,5 +17,6 @@ import chat from "../components/chat/chat.vue";
 <style lang="scss">
 .main-page {
   display: flex;
+  overflow: hidden;
 }
 </style>

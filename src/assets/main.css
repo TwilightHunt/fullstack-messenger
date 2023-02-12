@@ -6,3 +6,6 @@
   font-weight: normal;
   font-family: Roboto;
 }
+body::-webkit-scrollbar {
+  width: 0;
+}

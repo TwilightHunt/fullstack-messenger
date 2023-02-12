@@ -20,17 +20,36 @@
         <v-icon class="browser__header__input-icon"> mdi-magnify </v-icon>
       </div>
     </header>
+    <div class="browser__chats">
+      <chatLink v-for="link in 40" />
+    </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import chatLink from "./chat-link.vue";
+</script>
 
 <style lang="scss" scoped>
+@import "../../assets/mixins/scrollbar.scss";
+
 .browser {
   background-color: var(--color-background-soft);
   max-width: 33vw;
   min-width: 20vw;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+}
+.browser__chats {
+  @include scrollbar(#000);
+  overflow-y: scroll;
+  flex: 0 1 100%;
+}
+[data-theme="dark"] {
+  .browser__chats {
+    @include scrollbar(#fff);
+  }
 }
 .browser__header__burger-icon {
   color: var(--color-heading);
@@ -39,6 +58,7 @@
 .browser__header {
   padding: 6px 13px;
   display: flex;
+  position: sticky;
 }
 .browser__header__search {
   position: relative;
