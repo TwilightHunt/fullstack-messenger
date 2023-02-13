@@ -12,6 +12,8 @@
   --vt-c-text-light-2: var(--vt-c-black-soft);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: var(--vt-c-white-soft);
+
+  --accent-color: #8774e1;
 }
 
 *,

@@ -17,6 +17,7 @@ export const useUserStore = defineStore(
       localStorage.setItem("token", data.value.token);
       return state.user;
     };
+
     const signUp = async (registrationData) => {
       const { email, username, password, repeatPassword } = registrationData;
       const { data, error } = await useAuth.register({
