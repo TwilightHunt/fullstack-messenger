@@ -186,6 +186,7 @@ const onRegister = async () => {
   padding: 8px;
   border-radius: 10px;
   font-size: 1.142em;
+  background: #fff;
   &:not(:last-child) {
     margin-bottom: 8px;
   }

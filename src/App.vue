@@ -1,5 +1,8 @@
 <script setup>
-import { RouterView } from "vue-router";
+import { onMounted } from "vue";
+import { RouterView, useRouter } from "vue-router";
+
+const router = useRouter();
 
 const setBodyTheme = () => {
   const body = document.body;
@@ -9,6 +12,10 @@ const setBodyTheme = () => {
 };
 
 setBodyTheme();
+
+onMounted(() => {
+  router.push(localStorage.getItem("token") ? "/" : "/login");
+});
 </script>
 <template>
   <RouterView />

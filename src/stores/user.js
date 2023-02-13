@@ -14,6 +14,7 @@ export const useUserStore = defineStore(
         throw new Error(errorMessage);
       }
       state.user = data.value.user;
+      localStorage.setItem("token", data.value.token);
       return state.user;
     };
     const signUp = async (registrationData) => {
@@ -29,6 +30,7 @@ export const useUserStore = defineStore(
         throw new Error(errorMessage);
       }
       state.user = data.value.user;
+      localStorage.setItem("token", data.value.token);
       return state.user;
     };
     return { ...toRefs(state), signIn, signUp };
