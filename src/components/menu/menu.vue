@@ -1,5 +1,5 @@
 <template>
-  <div class="menu">
+  <div class="menu _closed" v-click-outside="close" ref="menu">
     <div class="menu__content">
       <header class="menu__header">
         <img
@@ -10,13 +10,20 @@
           alt=""
           class="menu__header__profile-image"
         />
-        <div class="menu__header__options menu-options">
+        <div class="menu__header__options menu-options" @click="expandOptions">
           <div class="menu-options__username">{{ user.username }}</div>
           <v-icon class="menu-options__icon" :size="30">
             mdi-chevron-down
           </v-icon>
         </div>
       </header>
+      <span class="menu__separator"></span>
+      <div class="menu__wrapped-options">
+        <menuLink :color="accentColor" :icon="'mdi-plus'" rounded
+          >Add Account</menuLink
+        >
+      </div>
+      <span class="menu__separator"></span>
       <div class="menu__setings">
         <menuLink :color="'#56B3F5'" :icon="'mdi-account-multiple'"
           >New Group</menuLink
@@ -34,6 +41,8 @@
           :color="'#7595FF'"
           :icon="'mdi-moon-waning-crescent'"
           :withSlider="true"
+          :checked="currentTheme === 'dark'"
+          @sliderFunction="toggleTheme"
           >Night Mode</menuLink
         >
       </div>
@@ -49,7 +58,36 @@
 import menuLink from "./menu-link.vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../../stores/user.js";
+import { ref } from "vue";
 const { user } = storeToRefs(useUserStore());
+
+const style = getComputedStyle(document.body);
+const accentColor = ref(style.getPropertyValue("--accent-color"));
+
+const currentTheme = ref(localStorage.getItem("theme"));
+
+const close = (event) => {
+  const menu = document.querySelector(".menu");
+
+  if (!event.target.className.includes("browser__header__burger")) {
+    menu.classList.add("_closed");
+  }
+};
+
+const expandOptions = () => {
+  document.querySelector(".menu__header").classList.toggle("_expanded");
+};
+
+const toggleTheme = () => {
+  const body = document.body;
+  if (body.getAttribute("data-theme") === "light") {
+    body.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
+  } else {
+    body.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "light");
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -60,6 +98,10 @@ const { user } = storeToRefs(useUserStore());
   bottom: 0;
   width: 340px;
   background-color: var(--color-background-mute);
+  transition: all 0.2s ease-in;
+  &._closed {
+    transform: translateX(-100%);
+  }
 }
 .menu__content {
   display: flex;
@@ -68,14 +110,15 @@ const { user } = storeToRefs(useUserStore());
   height: 100vh;
   padding: 25px 30px;
 }
-.menu__header {
-  &::after {
-    content: "";
-    display: block;
-    margin: 25px -30px;
-    height: 1px;
-    background-color: black;
-    opacity: 0.3;
+.menu__separator {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: black;
+  margin: 0 -30px;
+  opacity: 0.3;
+  &:first-of-type {
+    display: none;
   }
 }
 .menu__header__profile-image {
@@ -83,17 +126,37 @@ const { user } = storeToRefs(useUserStore());
   height: 60px;
   border-radius: 50%;
 }
+.menu__header {
+  padding-bottom: 15px;
+  &._expanded .menu-options__icon {
+    transform: rotate(180deg);
+  }
+  &._expanded ~ .menu__wrapped-options {
+    display: block;
+    transform: translateY(0);
+  }
+  &._expanded + .menu__separator {
+    display: block;
+  }
+}
 .menu-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
 }
+.menu__wrapped-options {
+  padding: 10px 0;
+  display: none;
+  transform: translateY(-100%);
+}
 .menu-options__icon {
   opacity: 0.5;
+  transition: all 0.2s ease-in;
 }
 .menu__setings {
   margin-bottom: auto;
+  padding: 15px 0;
 }
 .menu__footer__title {
   opacity: 0.5;

@@ -8,6 +8,7 @@
         icon
         class="browser__header__burger-button"
         :size="40"
+        @click="openMenu"
       >
         <v-icon class="browser__header__burger-icon"> mdi-menu </v-icon>
       </v-btn>
@@ -30,6 +31,11 @@
 <script setup>
 import chatLink from "./chat-link.vue";
 import Menu from "../menu/menu.vue";
+
+const openMenu = () => {
+  const menu = document.querySelector(".menu");
+  menu.classList.remove("_closed");
+};
 </script>
 
 <style lang="scss" scoped>

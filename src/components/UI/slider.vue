@@ -1,11 +1,20 @@
 <template>
   <label class="switch">
-    <input type="checkbox" class="checkbox" />
+    <input
+      :checked="checked"
+      @change="$emit('onChange')"
+      type="checkbox"
+      class="checkbox"
+    />
     <span class="slider"></span>
   </label>
 </template>
 
-<script setup></script>
+<script setup>
+defineProps({
+  checked: Boolean,
+});
+</script>
 
 <style lang="scss" scoped>
 .checkbox {

@@ -4,7 +4,12 @@
       <v-icon class="menu-link__icon" :size="20">{{ icon }}</v-icon>
     </div>
     <div class="menu-link__text"><slot></slot></div>
-    <slider class="menu-link__slider" v-if="withSlider" />
+    <slider
+      class="menu-link__slider"
+      v-if="withSlider"
+      :checked="checked"
+      @onChange="$emit('sliderFunction')"
+    />
   </div>
 </template>
 
@@ -14,6 +19,7 @@ defineProps({
   icon: String,
   color: String,
   withSlider: Boolean,
+  checked: Boolean,
 });
 </script>
 
@@ -29,10 +35,16 @@ defineProps({
   width: 30px;
   height: 30px;
 }
+[rounded] {
+  .menu-link__label {
+    border-radius: 50%;
+  }
+}
 .menu-link__icon {
   position: relative;
   top: 0;
   left: 0;
+  color: #fff;
   transform: translate(25%, 10%);
 }
 .menu-link__slider {
