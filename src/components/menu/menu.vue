@@ -25,24 +25,45 @@
       </div>
       <span class="menu__separator"></span>
       <div class="menu__setings">
-        <menuLink :color="'#56B3F5'" :icon="'mdi-account-multiple'"
+        <menuLink
+          :color="'#56B3F5'"
+          :icon="'mdi-account-multiple'"
+          @action="openPopup('/new-group')"
           >New Group</menuLink
         >
-        <menuLink :color="'#ED9F20'" :icon="'mdi-bullhorn'"
+        <menuLink
+          :color="'#ED9F20'"
+          :icon="'mdi-bullhorn'"
+          @action="openPopup('/new-channel')"
           >New Channel</menuLink
         >
-        <menuLink :color="'#F06964'" :icon="'mdi-account'">Contacts</menuLink>
-        <menuLink :color="'#6DC534'" :icon="'mdi-phone'">Calls</menuLink>
+        <menuLink
+          :color="'#F06964'"
+          :icon="'mdi-account'"
+          @action="openPopup('/contacts')"
+          >Contacts</menuLink
+        >
+        <menuLink
+          :color="'#6DC534'"
+          :icon="'mdi-phone'"
+          @action="openPopup('/calls')"
+          >Calls</menuLink
+        >
         <menuLink :color="'#56B3F5'" :icon="'mdi-bookmark'"
           >Saved Messages</menuLink
         >
-        <menuLink :color="'#B580E2'" :icon="'mdi-cog'">Settings</menuLink>
+        <menuLink
+          :color="'#B580E2'"
+          :icon="'mdi-cog'"
+          @action="openPopup('/settings')"
+          >Settings</menuLink
+        >
         <menuLink
           :color="'#7595FF'"
           :icon="'mdi-moon-waning-crescent'"
           :withSlider="true"
           :checked="currentTheme === 'dark'"
-          @sliderFunction="toggleTheme"
+          @action="toggleTheme"
           >Night Mode</menuLink
         >
       </div>
@@ -59,10 +80,13 @@ import menuLink from "./menu-link.vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../../stores/user.js";
 import { ref } from "vue";
-const { user } = storeToRefs(useUserStore());
+import { useRouter } from "vue-router";
 
+const { user } = storeToRefs(useUserStore());
 const style = getComputedStyle(document.body);
 const accentColor = ref(style.getPropertyValue("--accent-color"));
+
+const router = useRouter();
 
 const currentTheme = ref(localStorage.getItem("theme"));
 
@@ -83,10 +107,16 @@ const toggleTheme = () => {
   if (body.getAttribute("data-theme") === "light") {
     body.setAttribute("data-theme", "dark");
     localStorage.setItem("theme", "dark");
+    currentTheme.value = "dark";
   } else {
     body.setAttribute("data-theme", "light");
     localStorage.setItem("theme", "light");
+    currentTheme.value = "light";
   }
+};
+
+const openPopup = (path) => {
+  router.push(path);
 };
 </script>
 
@@ -108,14 +138,13 @@ const toggleTheme = () => {
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
-  padding: 25px 30px;
+  padding: 25px 0;
 }
 .menu__separator {
   content: "";
   display: block;
   height: 1px;
   background-color: black;
-  margin: 0 -30px;
   opacity: 0.3;
   &:first-of-type {
     display: none;
@@ -127,7 +156,8 @@ const toggleTheme = () => {
   border-radius: 50%;
 }
 .menu__header {
-  padding-bottom: 15px;
+  padding: 15px 30px;
+  padding-top: 0;
   &._expanded .menu-options__icon {
     transform: rotate(180deg);
   }
@@ -152,11 +182,14 @@ const toggleTheme = () => {
 }
 .menu-options__icon {
   opacity: 0.5;
-  transition: all 0.2s ease-in;
+  transition: transform 0.2s ease-in;
 }
 .menu__setings {
   margin-bottom: auto;
   padding: 15px 0;
+}
+.menu__footer {
+  padding: 0 30px;
 }
 .menu__footer__title {
   opacity: 0.5;
@@ -164,5 +197,11 @@ const toggleTheme = () => {
 .menu__footer__version {
   opacity: 0.5;
   font-weight: 200;
+}
+.menu-link {
+  padding: 7px 30px;
+  &:hover {
+    background-color: var(--color-background-mute-hover);
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-link">
+  <div class="menu-link" @click="$emit('action')">
     <div class="menu-link__label" :style="`background-color: ${color};`">
       <v-icon class="menu-link__icon" :size="20">{{ icon }}</v-icon>
     </div>
@@ -8,7 +8,7 @@
       class="menu-link__slider"
       v-if="withSlider"
       :checked="checked"
-      @onChange="$emit('sliderFunction')"
+      @onChange="$emit('action')"
     />
   </div>
 </template>
@@ -28,6 +28,7 @@ defineProps({
   display: flex;
   padding: 7px 0;
   align-items: center;
+  cursor: pointer;
 }
 .menu-link__label {
   margin-right: 20px;
