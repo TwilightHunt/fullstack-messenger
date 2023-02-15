@@ -1,6 +1,5 @@
 <template>
   <div class="browser">
-    <Menu />
     <header class="browser__header">
       <v-btn
         flat
@@ -30,7 +29,6 @@
 
 <script setup>
 import chatLink from "./chat-link.vue";
-import Menu from "../menu/menu.vue";
 
 const openMenu = () => {
   const menu = document.querySelector(".menu");

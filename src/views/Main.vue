@@ -1,5 +1,6 @@
 <template>
   <main class="main-page">
+    <Menu />
     <createPopup
       v-if="$route.path === '/new-group'"
       inputTitle="Group name"
@@ -31,6 +32,8 @@
 <script setup>
 import browser from "../components/broswer/browser.vue";
 import chat from "../components/chat/chat.vue";
+import Menu from "../components/menu/menu.vue";
+
 import {
   createPopup,
   newChannelPopup,

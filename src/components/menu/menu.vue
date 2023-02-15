@@ -1,5 +1,5 @@
 <template>
-  <div class="menu _closed" v-click-outside="close" ref="menu">
+  <div class="menu _closed" v-click-outside="onClickOutside" ref="menu">
     <div class="menu__content">
       <header class="menu__header">
         <img
@@ -90,12 +90,15 @@ const router = useRouter();
 
 const currentTheme = ref(localStorage.getItem("theme"));
 
-const close = (event) => {
-  const menu = document.querySelector(".menu");
-
+const onClickOutside = (event) => {
   if (!event.target.className.includes("browser__header__burger")) {
-    menu.classList.add("_closed");
+    closeMenu();
   }
+};
+
+const closeMenu = () => {
+  const menu = document.querySelector(".menu");
+  menu.classList.add("_closed");
 };
 
 const expandOptions = () => {
@@ -116,6 +119,7 @@ const toggleTheme = () => {
 };
 
 const openPopup = (path) => {
+  closeMenu();
   router.push(path);
 };
 </script>
