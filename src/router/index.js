@@ -34,6 +34,13 @@ const router = createRouter({
       path: "/settings",
       name: "settings",
       component: HomeView,
+      children: [
+        {
+          path: "user",
+          name: "user",
+          component: HomeView,
+        },
+      ],
     },
     {
       path: "/login",

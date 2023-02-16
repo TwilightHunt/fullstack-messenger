@@ -9,32 +9,24 @@
         @negativeAction="goToMain"
         v-click-outside="goToMain"
       />
-    </transition>
-    <transition name="appear">
       <newChannelPopup
-        v-if="$route.path === '/new-channel'"
+        v-else-if="$route.path === '/new-channel'"
         inputTitle="Channel name"
         @negativeAction="goToMain"
         v-click-outside="goToMain"
       />
-    </transition>
-    <transition name="appear">
       <contactsPopup
-        v-if="$route.path === '/contacts'"
+        v-else-if="$route.path === '/contacts'"
         @negativeAction="goToMain"
         v-click-outside="goToMain"
       />
-    </transition>
-    <transition name="appear">
       <callsPopup
-        v-if="$route.path === '/calls'"
+        v-else-if="$route.path === '/calls'"
         @negativeAction="goToMain"
         v-click-outside="goToMain"
       />
-    </transition>
-    <transition name="appear">
       <settingsPopup
-        v-if="$route.path === '/settings'"
+        v-else-if="$route.path.startsWith('/settings')"
         @close="goToMain"
         v-click-outside="goToMain"
       />
