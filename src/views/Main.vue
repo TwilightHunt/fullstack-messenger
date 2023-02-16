@@ -1,29 +1,37 @@
 <template>
   <main class="main-page">
     <Menu />
-    <createPopup
-      v-if="$route.path === '/new-group'"
-      inputTitle="Group name"
-      positiveButton="Next"
-      @negativeAction="goToMain"
-      v-click-outside="goToMain"
-    />
-    <newChannelPopup
-      v-if="$route.path === '/new-channel'"
-      inputTitle="Channel name"
-      @negativeAction="goToMain"
-      v-click-outside="goToMain"
-    />
-    <contactsPopup
-      v-if="$route.path === '/contacts'"
-      @negativeAction="goToMain"
-      v-click-outside="goToMain"
-    />
-    <callsPopup
-      v-if="$route.path === '/calls'"
-      @negativeAction="goToMain"
-      v-click-outside="goToMain"
-    />
+    <transition name="appear">
+      <createPopup
+        v-if="$route.path === '/new-group'"
+        inputTitle="Group name"
+        positiveButton="Next"
+        @negativeAction="goToMain"
+        v-click-outside="goToMain"
+      />
+    </transition>
+    <transition name="appear">
+      <newChannelPopup
+        v-if="$route.path === '/new-channel'"
+        inputTitle="Channel name"
+        @negativeAction="goToMain"
+        v-click-outside="goToMain"
+      />
+    </transition>
+    <transition name="appear">
+      <contactsPopup
+        v-if="$route.path === '/contacts'"
+        @negativeAction="goToMain"
+        v-click-outside="goToMain"
+      />
+    </transition>
+    <transition name="appear">
+      <callsPopup
+        v-if="$route.path === '/calls'"
+        @negativeAction="goToMain"
+        v-click-outside="goToMain"
+      />
+    </transition>
     <browser />
     <chat />
   </main>
@@ -53,5 +61,30 @@ const goToMain = () => {
 .main-page {
   display: flex;
   overflow: hidden;
+}
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translate(0, -50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(50%, -50%);
+  }
+}
+@keyframes disappear {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(100%, -50%);
+  }
+}
+.appear-enter-active {
+  animation: appear 0.3s;
+}
+.appear-leave-active {
+  animation: disappear 0.3s;
 }
 </style>
