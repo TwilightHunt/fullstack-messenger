@@ -32,6 +32,13 @@
         v-click-outside="goToMain"
       />
     </transition>
+    <transition name="appear">
+      <settingsPopup
+        v-if="$route.path === '/settings'"
+        @close="goToMain"
+        v-click-outside="goToMain"
+      />
+    </transition>
     <browser />
     <chat />
   </main>
@@ -47,6 +54,7 @@ import {
   newChannelPopup,
   contactsPopup,
   callsPopup,
+  settingsPopup,
 } from "../components/popups/popups.js";
 import { useRouter } from "vue-router";
 

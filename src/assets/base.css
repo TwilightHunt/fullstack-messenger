@@ -30,6 +30,11 @@ a:-webkit-any-link {
 a {
   text-decoration: none;
 }
+* {
+  margin: 0px;
+  padding: 0px;
+  border-width: 0px;
+}
 body {
   color: var(--color-text);
   background: var(--color-background);
