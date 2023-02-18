@@ -171,17 +171,6 @@ const goTo = (path) => {
 .settings__scale__slider__value {
   margin-left: 15px;
 }
-// @keyframes fade {
-//   0% {
-//     opacity: 0;
-//   }
-//   100% {
-//     opacity: 1;
-//   }
-// }
-// .fade-enter-active {
-//   animation: fade 0.2s;
-// }
 .fade-leave-active {
   animation: fade 0.2s reverse;
 }

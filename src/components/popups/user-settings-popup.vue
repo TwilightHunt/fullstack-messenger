@@ -8,11 +8,7 @@
         <div class="user-settings__header__title">Edit profile</div>
       </header>
       <div class="user-settings__body">
-        <div class="user-settings__image-input">
-          <v-icon size="40" class="user-settings__image-input__icon">
-            mdi-camera-plus-outline
-          </v-icon>
-        </div>
+        <fileUpload />
         <v-text-field
           label="Username (required)"
           variant="underlined"
@@ -40,6 +36,7 @@
 
 <script setup>
 import popup from "./popup.vue";
+import fileUpload from "../UI/file-upload.vue";
 import { goBack } from "../../composables/useHistory.js";
 
 const onBackClick = () => {
@@ -64,21 +61,6 @@ const onBackClick = () => {
   &:hover {
     opacity: 1;
   }
-}
-.user-settings__image-input {
-  background-color: var(--accent-color);
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  position: relative;
-}
-.user-settings__image-input__icon {
-  position: absolute;
-  top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%);
-}
-.user-settings__header__title {
 }
 .user-settings__body {
   display: flex;
