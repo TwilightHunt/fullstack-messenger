@@ -59,10 +59,8 @@ const onBackClick = () => {
   goBack();
 };
 
-const updateData = async (event) => {
-  console.log(event.target.value);
-  const user = await update({ username: data.username, bio: data.bio });
-  console.log(user);
+const updateData = async () => {
+  await update({ username: data.username, bio: data.bio });
 };
 </script>
 

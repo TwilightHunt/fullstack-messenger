@@ -27,6 +27,7 @@ export const useUserStore = defineStore(
       localStorage.setItem("token", data.value.token);
       return state.user;
     };
+
     const update = async (newData) => {
       const updatedData = { ...state.user, ...newData };
       const { data, error } = await useAuth.update({ ...updatedData });

@@ -25,6 +25,7 @@ export default {
     user.fetching = fetching;
     return { ...toRefs(user) };
   },
+
   async register(data) {
     let user = reactive({ data: {}, error: null, fetching: false });
     const { response, error, fetching, fetchData } = useFetch(
@@ -37,6 +38,7 @@ export default {
     user.fetching = fetching;
     return { ...toRefs(user) };
   },
+
   async update(data) {
     let user = reactive({ data: {}, error: null, fetching: false });
     const { response, error, fetching, fetchData } = useFetch(

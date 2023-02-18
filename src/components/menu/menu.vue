@@ -10,6 +10,7 @@
           alt=""
           class="menu__header__profile-image"
         />
+
         <div class="menu__header__options menu-options" @click="expandOptions">
           <div class="menu-options__username">{{ user.username }}</div>
           <v-icon class="menu-options__icon" :size="30">
