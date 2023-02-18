@@ -13,14 +13,11 @@ const config = {
 };
 
 export default {
-  async login({ login, password }) {
+  async login(data) {
     let user = reactive({ data: {}, error: null, fetching: false });
     const { response, error, fetching, fetchData } = useFetch(
       `${baseUrl}/login`,
-      {
-        ...config,
-        data: { login, password },
-      }
+      { ...config, data }
     );
     await fetchData();
     user.data = response;
@@ -28,13 +25,26 @@ export default {
     user.fetching = fetching;
     return { ...toRefs(user) };
   },
-  async register({ email, username, password, repeatPassword }) {
+  async register(data) {
     let user = reactive({ data: {}, error: null, fetching: false });
     const { response, error, fetching, fetchData } = useFetch(
       `${baseUrl}/register`,
+      { ...config, data }
+    );
+    await fetchData();
+    user.data = response;
+    user.error = error;
+    user.fetching = fetching;
+    return { ...toRefs(user) };
+  },
+  async update(data) {
+    let user = reactive({ data: {}, error: null, fetching: false });
+    const { response, error, fetching, fetchData } = useFetch(
+      `${baseUrl}/user-update`,
       {
         ...config,
-        data: { email, username, password, repeatPassword },
+        method: "PUT",
+        data,
       }
     );
     await fetchData();

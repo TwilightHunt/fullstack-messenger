@@ -7,8 +7,7 @@ export const useUserStore = defineStore(
   () => {
     const state = reactive({ user: {} });
     const signIn = async (loginData) => {
-      const { login, password } = loginData;
-      const { data, error } = await useAuth.login({ login, password });
+      const { data, error } = await useAuth.login({ ...loginData });
       if (error.value) {
         const errorMessage = error.value.response.data.error;
         throw new Error(errorMessage);
@@ -19,13 +18,7 @@ export const useUserStore = defineStore(
     };
 
     const signUp = async (registrationData) => {
-      const { email, username, password, repeatPassword } = registrationData;
-      const { data, error } = await useAuth.register({
-        email,
-        username,
-        password,
-        repeatPassword,
-      });
+      const { data, error } = await useAuth.register({ ...registrationData });
       if (error.value) {
         const errorMessage = error.value.response.data.error;
         throw new Error(errorMessage);
@@ -34,7 +27,17 @@ export const useUserStore = defineStore(
       localStorage.setItem("token", data.value.token);
       return state.user;
     };
-    return { ...toRefs(state), signIn, signUp };
+    const update = async (newData) => {
+      const updatedData = { ...state.user, ...newData };
+      const { data, error } = await useAuth.update({ ...updatedData });
+      if (error.value) {
+        const errorMessage = error.value.response.data.error;
+        throw new Error(errorMessage);
+      }
+      state.user = data.value.user;
+      return state.user;
+    };
+    return { ...toRefs(state), signIn, signUp, update };
   },
   {
     persist: true,

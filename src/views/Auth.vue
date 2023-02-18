@@ -109,7 +109,7 @@ const registerData = reactive({
 
 const onLogin = async () => {
   try {
-    const user = await userStore.signIn(loginData);
+    const user = await userStore.signIn({ ...loginData });
     console.log(user);
     router.push("/");
   } catch (error) {
@@ -121,7 +121,7 @@ const onRegister = async () => {
     if (registerData.password !== registerData.repeatPassword) {
       throw new Error("Passwords are not same");
     }
-    const user = await userStore.signUp(registerData);
+    const user = await userStore.signUp({ ...registerData });
     console.log(user);
     router.push("/");
   } catch (error) {
@@ -187,6 +187,7 @@ const onRegister = async () => {
   border-radius: 10px;
   font-size: 1.142em;
   background: #fff;
+  color: #000;
   &:not(:last-child) {
     margin-bottom: 8px;
   }

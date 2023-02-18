@@ -2,11 +2,7 @@
   <popup>
     <div class="create-popup">
       <div class="create-popup__body">
-        <img
-          src="https://thumbnail.imgbin.com/17/13/14/imgbin-add-to-3p16ys7fsCgFn8fL6mSi2a4X3_t.jpg"
-          alt=""
-          class="create-popup__image"
-        />
+        <fileUpload />
         <v-text-field
           :label="inputTitle"
           variant="underlined"
@@ -37,6 +33,7 @@
 
 <script setup>
 import popup from "./popup.vue";
+import fileUpload from "../UI/file-upload.vue";
 
 defineProps({
   inputTitle: {

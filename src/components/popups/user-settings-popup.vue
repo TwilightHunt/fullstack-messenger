@@ -14,12 +14,9 @@
           variant="underlined"
           color="primary"
           class="user-settings__input"
-        ></v-text-field>
-        <v-text-field
-          label="Email"
-          variant="underlined"
-          color="primary"
-          class="user-settings__input"
+          v-model="data.username"
+          :rules="[data.rules.required, data.rules.min]"
+          @focusout="updateData"
         ></v-text-field>
         <v-text-field
           label="Bio"
@@ -28,7 +25,10 @@
           class="user-settings__input"
           maxlength="70"
           counter
-        ></v-text-field>
+          v-model="data.bio"
+          @focusout="updateData"
+        >
+        </v-text-field>
       </div>
     </div>
   </popup>
@@ -39,8 +39,30 @@ import popup from "./popup.vue";
 import fileUpload from "../UI/file-upload.vue";
 import { goBack } from "../../composables/useHistory.js";
 
+import { storeToRefs } from "pinia";
+import { useUserStore } from "../../stores/user.js";
+import { reactive } from "vue";
+
+const { update } = useUserStore();
+const { user } = storeToRefs(useUserStore());
+
+const data = reactive({
+  username: user.value.username ?? "",
+  bio: user.value.bio ?? "",
+  rules: {
+    required: (value) => !!value || "Required.",
+    min: (v) => v.length >= 2 || "Min 2 characters",
+  },
+});
+
 const onBackClick = () => {
   goBack();
+};
+
+const updateData = async (event) => {
+  console.log(event.target.value);
+  const user = await update({ username: data.username, bio: data.bio });
+  console.log(user);
 };
 </script>
 

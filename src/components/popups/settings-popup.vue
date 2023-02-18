@@ -125,6 +125,7 @@ const goTo = (path) => {
   margin-left: 20px;
   opacity: 0.5;
   cursor: pointer;
+  transition: opacity 0.2s ease;
   &:hover {
     opacity: 1;
   }

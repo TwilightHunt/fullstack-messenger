@@ -63,6 +63,7 @@ defineProps({
 }
 .list-popup__header__action {
   opacity: 0.5;
+  transition: opacity 0.2s ease;
   &:hover {
     cursor: pointer;
     opacity: 1;
