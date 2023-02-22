@@ -1,10 +1,18 @@
 <template>
-  <div class="popup">
+  <div class="popup" v-click-outside="closePopup">
     <slot></slot>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import usePopups from "../../composables/usePopups";
+
+const { setActivePopup } = usePopups();
+
+const closePopup = () => {
+  setActivePopup("");
+};
+</script>
 
 <style lang="scss" scoped>
 .popup {

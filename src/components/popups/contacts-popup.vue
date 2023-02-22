@@ -3,6 +3,7 @@
     title="Contacts"
     headerAction="mdi-sort"
     positiveButton="Add Contact"
+    @negativeAction="closePopup"
   >
     <div class="contacts-popup">
       <div class="contacts-popup__input-wrapper">
@@ -28,6 +29,13 @@
 <script setup>
 import listPopup from "./list-popup.vue";
 import listPopupItem from "./list-popup-item.vue";
+import usePopups from "../../composables/usePopups";
+
+const { setActivePopup } = usePopups();
+
+const closePopup = () => {
+  setActivePopup("");
+};
 </script>
 
 <style lang="scss" scoped>

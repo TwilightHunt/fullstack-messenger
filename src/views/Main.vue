@@ -2,34 +2,7 @@
   <main class="main-page">
     <Menu />
     <transition name="appear">
-      <createPopup
-        v-if="$route.path === '/new-group'"
-        inputTitle="Group name"
-        positiveButton="Next"
-        @negativeAction="goToMain"
-        v-click-outside="goToMain"
-      />
-      <newChannelPopup
-        v-else-if="$route.path === '/new-channel'"
-        inputTitle="Channel name"
-        @negativeAction="goToMain"
-        v-click-outside="goToMain"
-      />
-      <contactsPopup
-        v-else-if="$route.path === '/contacts'"
-        @negativeAction="goToMain"
-        v-click-outside="goToMain"
-      />
-      <callsPopup
-        v-else-if="$route.path === '/calls'"
-        @negativeAction="goToMain"
-        v-click-outside="goToMain"
-      />
-      <settingsPopup
-        v-else-if="$route.path.startsWith('/settings')"
-        @close="goToMain"
-        v-click-outside="goToMain"
-      />
+      <component :is="popup" />
     </transition>
     <browser />
     <chat />
@@ -41,19 +14,29 @@ import browser from "../components/broswer/browser.vue";
 import chat from "../components/chat/chat.vue";
 import Menu from "../components/menu/menu.vue";
 
+import usePopups from "../composables/usePopups.js";
+
+const { popup } = usePopups();
+</script>
+
+<script>
 import {
   createPopup,
   newChannelPopup,
+  newGroupPopup,
   contactsPopup,
   callsPopup,
   settingsPopup,
 } from "../components/popups/popups.js";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-
-const goToMain = () => {
-  router.push("/");
+export default {
+  components: {
+    createPopup,
+    newChannelPopup,
+    newGroupPopup,
+    contactsPopup,
+    callsPopup,
+    settingsPopup,
+  },
 };
 </script>
 

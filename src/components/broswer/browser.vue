@@ -22,7 +22,7 @@
       </div>
     </header>
     <div class="browser__chats">
-      <chatLink v-for="link in 40" />
+      <chatLink v-for="link in 3" />
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@ const openMenu = () => {
   min-width: 20vw;
   display: flex;
   flex-direction: column;
-  max-height: 100vh;
+  height: 100vh;
 }
 .browser__chats {
   @include scrollbar(#000);
@@ -62,7 +62,7 @@ const openMenu = () => {
   opacity: 0.7;
 }
 .browser__header {
-  padding: 6px 13px;
+  padding: 6px 13px 10px 13px;
   display: flex;
   position: sticky;
 }

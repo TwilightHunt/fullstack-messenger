@@ -9,7 +9,7 @@
       name="avatar"
       accept="image/png, image/jpeg"
       class="file-upload__input"
-      @change="previewImage"
+      @change="$emit('onUpload')"
     />
   </label>
 </template>

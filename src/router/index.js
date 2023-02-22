@@ -11,38 +11,6 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/new-channel",
-      name: "new-channel",
-      component: HomeView,
-    },
-    {
-      path: "/new-group",
-      name: "new-group",
-      component: HomeView,
-    },
-    {
-      path: "/contacts",
-      name: "contacts",
-      component: HomeView,
-    },
-    {
-      path: "/calls",
-      name: "calls",
-      component: HomeView,
-    },
-    {
-      path: "/settings",
-      name: "settings",
-      component: HomeView,
-      children: [
-        {
-          path: "user",
-          name: "user",
-          component: HomeView,
-        },
-      ],
-    },
-    {
       path: "/login",
       name: "login",
       component: Auth,

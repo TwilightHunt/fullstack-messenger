@@ -29,25 +29,25 @@
         <menuLink
           :color="'#56B3F5'"
           :icon="'mdi-account-multiple'"
-          @action="openPopup('/new-group')"
+          @action="openPopup('newGroupPopup')"
           >New Group</menuLink
         >
         <menuLink
           :color="'#ED9F20'"
           :icon="'mdi-bullhorn'"
-          @action="openPopup('/new-channel')"
+          @action="openPopup('newChannelPopup')"
           >New Channel</menuLink
         >
         <menuLink
           :color="'#F06964'"
           :icon="'mdi-account'"
-          @action="openPopup('/contacts')"
+          @action="openPopup('contactsPopup')"
           >Contacts</menuLink
         >
         <menuLink
           :color="'#6DC534'"
           :icon="'mdi-phone'"
-          @action="openPopup('/calls')"
+          @action="openPopup('callsPopup')"
           >Calls</menuLink
         >
         <menuLink :color="'#56B3F5'" :icon="'mdi-bookmark'"
@@ -56,7 +56,7 @@
         <menuLink
           :color="'#B580E2'"
           :icon="'mdi-cog'"
-          @action="openPopup('/settings')"
+          @action="openPopup('settingsPopup')"
           >Settings</menuLink
         >
         <menuLink
@@ -82,10 +82,13 @@ import { storeToRefs } from "pinia";
 import { useUserStore } from "../../stores/user.js";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import usePopups from "../../composables/usePopups";
 
 const { user } = storeToRefs(useUserStore());
 const style = getComputedStyle(document.body);
 const accentColor = ref(style.getPropertyValue("--accent-color"));
+
+const { setActivePopup } = usePopups();
 
 const router = useRouter();
 
@@ -119,9 +122,9 @@ const toggleTheme = () => {
   }
 };
 
-const openPopup = (path) => {
+const openPopup = (name) => {
   closeMenu();
-  router.push(path);
+  setActivePopup(name);
 };
 </script>
 

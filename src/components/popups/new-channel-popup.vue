@@ -1,5 +1,5 @@
 <template>
-  <createPopup input-title="Channel name">
+  <createPopup input-title="Channel name" @negativeAction="closePopup">
     <v-text-field
       label="Description (optional)"
       variant="underlined"
@@ -11,6 +11,13 @@
 
 <script setup>
 import createPopup from "./create-popup.vue";
+import usePopups from "../../composables/usePopups";
+
+const { setActivePopup } = usePopups();
+
+const closePopup = () => {
+  setActivePopup("");
+};
 </script>
 
 <style lang="scss" scoped>

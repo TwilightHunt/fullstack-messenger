@@ -8,7 +8,7 @@
         <div class="user-settings__header__title">Edit profile</div>
       </header>
       <div class="user-settings__body">
-        <fileUpload />
+        <fileUpload @onUpload="openResizer" />
         <v-text-field
           label="Username (required)"
           variant="underlined"
@@ -37,6 +37,7 @@
 <script setup>
 import popup from "./popup.vue";
 import fileUpload from "../UI/file-upload.vue";
+import fileResizer from "../popups/file-resizer.vue";
 import { goBack } from "../../composables/useHistory.js";
 
 import { storeToRefs } from "pinia";
@@ -53,6 +54,7 @@ const data = reactive({
     required: (value) => !!value || "Required.",
     min: (v) => v.length >= 2 || "Min 2 characters",
   },
+  isResizerOpened: false,
 });
 
 const onBackClick = () => {
@@ -61,6 +63,10 @@ const onBackClick = () => {
 
 const updateData = async () => {
   await update({ username: data.username, bio: data.bio });
+};
+
+const openResizer = () => {
+  data.isResizerOpened = true;
 };
 </script>
 

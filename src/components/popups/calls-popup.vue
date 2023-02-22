@@ -1,5 +1,9 @@
 <template>
-  <listPopup title="Calls" headerAction="mdi-dots-vertical">
+  <listPopup
+    title="Calls"
+    headerAction="mdi-dots-vertical"
+    @negativeAction="closePopup"
+  >
     <div class="calls-popup">
       <listPopupItem
         v-for="i in 3"
@@ -16,6 +20,13 @@
 <script setup>
 import listPopup from "./list-popup.vue";
 import listPopupItem from "./list-popup-item.vue";
+import usePopups from "../../composables/usePopups";
+
+const { setActivePopup } = usePopups();
+
+const closePopup = () => {
+  setActivePopup("");
+};
 </script>
 
 <style lang="scss"></style>
