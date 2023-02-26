@@ -9,12 +9,16 @@
       name="avatar"
       accept="image/png, image/jpeg"
       class="file-upload__input"
-      @change="$emit('onUpload')"
+      @change="onUpload"
     />
   </label>
 </template>
 
 <script setup>
+import { defineEmits } from "vue";
+
+const emit = defineEmits(["onupload"]);
+
 const previewImage = (event) => {
   const input = document.querySelector(".file-upload");
 
@@ -22,6 +26,9 @@ const previewImage = (event) => {
 
   input.style.backgroundImage = `url(${URL.createObjectURL(image)})`;
   input.style.backgroundColor = "grey";
+};
+const onUpload = (event) => {
+  emit("onupload", event);
 };
 </script>
 

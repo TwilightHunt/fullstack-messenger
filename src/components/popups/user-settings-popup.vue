@@ -2,13 +2,16 @@
   <popup>
     <div class="user-settings">
       <header class="user-settings__header">
-        <v-icon class="user-settings__header__icon" @click="onBackClick">
+        <v-icon
+          class="user-settings__header__icon"
+          @click="setActivePopup('settingsPopup')"
+        >
           mdi-arrow-left
         </v-icon>
         <div class="user-settings__header__title">Edit profile</div>
       </header>
       <div class="user-settings__body">
-        <fileUpload @onUpload="openResizer" />
+        <fileUpload @onupload="openResizer" />
         <v-text-field
           label="Username (required)"
           variant="underlined"
@@ -37,12 +40,15 @@
 <script setup>
 import popup from "./popup.vue";
 import fileUpload from "../UI/file-upload.vue";
-import fileResizer from "../popups/file-resizer.vue";
-import { goBack } from "../../composables/useHistory.js";
 
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../../stores/user.js";
 import { reactive } from "vue";
+import usePopups from "../../composables/usePopups";
+import useResizer from "../../composables/useResizer";
+
+const { setActivePopup } = usePopups();
+const { setImageSrc } = useResizer();
 
 const { update } = useUserStore();
 const { user } = storeToRefs(useUserStore());
@@ -54,19 +60,29 @@ const data = reactive({
     required: (value) => !!value || "Required.",
     min: (v) => v.length >= 2 || "Min 2 characters",
   },
-  isResizerOpened: false,
 });
-
-const onBackClick = () => {
-  goBack();
-};
 
 const updateData = async () => {
   await update({ username: data.username, bio: data.bio });
 };
 
-const openResizer = () => {
-  data.isResizerOpened = true;
+const openResizer = (event) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(event.target.files[0]);
+
+  reader.onload = function (e) {
+    const image = new Image();
+    image.src = e.target.result;
+
+    image.onload = () => {
+      if (image.height < 400 || image.width < 400) {
+        alert("Image must be at least 400x400px");
+        return;
+      }
+      setActivePopup("resizer");
+      setImageSrc(event.target.files[0]);
+    };
+  };
 };
 </script>
 

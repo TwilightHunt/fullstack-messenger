@@ -4,6 +4,8 @@ import newGroupPopup from "./new-group-popup.vue";
 import contactsPopup from "./contacts-popup.vue";
 import callsPopup from "./calls-popup.vue";
 import settingsPopup from "./settings-popup.vue";
+import resizer from "./file-resizer.vue";
+import userSettings from "./user-settings-popup.vue";
 
 export {
   createPopup,
@@ -12,4 +14,6 @@ export {
   contactsPopup,
   callsPopup,
   settingsPopup,
+  resizer,
+  userSettings,
 };

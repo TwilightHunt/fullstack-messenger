@@ -27,7 +27,10 @@ import {
   contactsPopup,
   callsPopup,
   settingsPopup,
+  resizer,
+  userSettings,
 } from "../components/popups/popups.js";
+
 export default {
   components: {
     createPopup,
@@ -36,6 +39,8 @@ export default {
     contactsPopup,
     callsPopup,
     settingsPopup,
+    resizer,
+    userSettings,
   },
 };
 </script>

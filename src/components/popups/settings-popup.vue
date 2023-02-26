@@ -23,7 +23,7 @@
         <menuLink
           :color="'#ED9F20'"
           :icon="'mdi-account-circle'"
-          @action="goTo('user')"
+          @action="setActivePopup('userSettings')"
           >Edit profile</menuLink
         >
         <menuLink :color="'#F06964'" :icon="'mdi-bell-ring'"
