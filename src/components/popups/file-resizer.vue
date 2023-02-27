@@ -37,18 +37,14 @@ const { image } = useResizer();
 
 onMounted(() => {
   const img = document.getElementById("image");
+  let minScale = 0;
 
   img.onload = () => {
-    let scale = 0;
-
-    if (img.width < img.height) {
-      scale = img.width / 400;
+    if (img.width >= img.height) {
+      minScale = 400 / img.height;
     } else {
-      scale = img.width / 400;
+      minScale = 400 / img.width;
     }
-
-    img.style.width = img.width / scale + "px";
-    img.style.height = img.height / scale + "px";
 
     const canvas = new fabric.Canvas("canvas", {});
     canvas.setDimensions({ width: 400, height: 400 });
@@ -73,8 +69,8 @@ onMounted(() => {
         imgInstance.scaleX += 0.0001 * event.e.deltaY;
         imgInstance.scaleY += 0.0001 * event.e.deltaY;
 
-        if (imgInstance.scaleX < 1) {
-          imgInstance.scaleX = imgInstance.scaleY = 1;
+        if (imgInstance.scaleX < minScale) {
+          imgInstance.scaleX = imgInstance.scaleY = minScale;
         }
         if (imgInstance.scaleX > 2) {
           imgInstance.scaleX = imgInstance.scaleY = 2;
