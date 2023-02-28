@@ -19,44 +19,55 @@
         <canvas @wheel="zoomImage" class="file-resizer__canvas" id="canvas">
         </canvas>
       </div>
+      <actionButton class="file-resizer__button" @click="upload"
+        >Submit</actionButton
+      >
     </div>
     <img :src="image" id="image" />
+    <canvas id="prev-canvas"> </canvas>
   </popup>
 </template>
 
 <script setup>
 import popup from "./popup.vue";
+import actionButton from "../UI/action-btn.vue";
 import useResizer from "../../composables/useResizer.js";
 import usePopups from "../../composables/usePopups";
 import { fabric } from "fabric";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
+import { saveAs } from "file-saver";
 
 const { setActivePopup } = usePopups();
 
 const { image } = useResizer();
+let imgInstance = null;
 
 onMounted(() => {
   const img = document.getElementById("image");
+
   let minScale = 0;
 
   img.onload = () => {
-    if (img.width >= img.height) {
-      minScale = 400 / img.height;
-    } else {
-      minScale = 400 / img.width;
-    }
-
-    const canvas = new fabric.Canvas("canvas", {});
+    const canvas = new fabric.Canvas("canvas", {
+      skipOffscreen: true,
+    });
     canvas.setDimensions({ width: 400, height: 400 });
+
+    if (img.width >= img.height) {
+      minScale = canvas.height / img.height;
+    } else {
+      minScale = canvas.width / img.width;
+    }
 
     let borderRight = canvas.width - img.width;
     let borderBottom = canvas.height - img.height;
 
-    const imgInstance = new fabric.Image(img, {
+    imgInstance = new fabric.Image(img, {
       lockRotation: true,
     });
 
     canvas.add(imgInstance);
+    canvas.item(0).hasControls = canvas.item(0).hasBorders = false;
 
     canvas.on({
       "object:moving": function (e) {
@@ -85,39 +96,60 @@ onMounted(() => {
   };
 });
 
-const zoomImage = (e) => {};
+const upload = () => {
+  const canvas = document.getElementById("prev-canvas");
+  const ctx = canvas.getContext("2d");
+  ctx.canvas.width = 400;
+  ctx.canvas.height = 400;
+  const img = document.getElementById("image");
+
+  ctx.drawImage(
+    img,
+    (imgInstance.left * -1) / imgInstance.scaleX,
+    (imgInstance.top * -1) / imgInstance.scaleX,
+    400 / imgInstance.scaleX,
+    400 / imgInstance.scaleX,
+    0,
+    0,
+    400,
+    400
+  );
+
+  canvas.toBlob(
+    (blob) => {
+      saveAs(blob, "mypng.png");
+    },
+    "image/jpeg",
+    0.95
+  );
+};
 </script>
 
 <style lang="scss" scoped>
 .file-resizer {
-  padding: 30px;
+  padding: 30px 40px;
   overflow: hidden;
 }
 .file-resizer__body {
-  width: 400px;
-  height: 400px;
+  margin: 30px auto;
 }
-
 .file-resizer__header {
   display: flex;
   align-items: center;
 }
-
 .file-resizer__header__icon-close {
   opacity: 0.5;
   transition: opacity 0.2s ease;
-  margin-right: 40px;
+  margin-right: 30px;
   cursor: pointer;
 
   &:hover {
     opacity: 1;
   }
 }
-
 .file-resizer__header__title {
   font-size: 1.2em;
 }
-
 .file-resizer__range-input {
   display: flex;
   input {
@@ -127,7 +159,6 @@ const zoomImage = (e) => {};
     margin-right: 10px;
   }
 }
-
 .file-resizer__image {
   position: absolute;
   pointer-events: none;
@@ -137,7 +168,20 @@ const zoomImage = (e) => {};
 .file-resizer__image {
   display: block;
 }
-#image {
+#image,
+#prev-canvas {
   display: none;
+}
+.file-resizer__button {
+  display: block;
+  background: var(--accent-color);
+  color: #fff;
+  font-size: 1.2em;
+  padding: 5px 20px;
+  margin: 0 auto;
+  width: 400px;
+  &:hover {
+    background: var(--accent-color);
+  }
 }
 </style>
