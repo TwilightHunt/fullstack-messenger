@@ -2,14 +2,7 @@
   <div class="menu _closed" v-click-outside="onClickOutside" ref="menu">
     <div class="menu__content">
       <header class="menu__header">
-        <img
-          :src="
-            user.profileImage ??
-            'https://avatarko.ru/img/kartinka/1/avatarko_anonim.jpg'
-          "
-          alt=""
-          class="menu__header__profile-image"
-        />
+        <img :src="profileImagePath()" class="menu__header__profile-image" />
 
         <div class="menu__header__options menu-options" @click="expandOptions">
           <div class="menu-options__username">{{ user.username }}</div>
@@ -81,16 +74,14 @@ import menuLink from "./menu-link.vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../../stores/user.js";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import usePopups from "../../composables/usePopups";
 
 const { user } = storeToRefs(useUserStore());
+const { profileImagePath } = useUserStore();
 const style = getComputedStyle(document.body);
 const accentColor = ref(style.getPropertyValue("--accent-color"));
 
 const { setActivePopup } = usePopups();
-
-const router = useRouter();
 
 const currentTheme = ref(localStorage.getItem("theme"));
 

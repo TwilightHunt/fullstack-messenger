@@ -36,6 +36,9 @@ import usePopups from "../../composables/usePopups";
 import { fabric } from "fabric";
 import { onMounted } from "vue";
 import { saveAs } from "file-saver";
+import { useUserStore } from "../../stores/user.js";
+
+const { update } = useUserStore();
 
 const { setActivePopup } = usePopups();
 
@@ -116,8 +119,15 @@ const upload = () => {
   );
 
   canvas.toBlob(
-    (blob) => {
-      saveAs(blob, "mypng.png");
+    async (blob, error) => {
+      //saveAs(blob, "mypng.png");
+      if (error) {
+        alert(error);
+        return;
+      }
+      const file = new File([blob], "image.jpg");
+      await update({ profileImage: file });
+      setActivePopup("");
     },
     "image/jpeg",
     0.95

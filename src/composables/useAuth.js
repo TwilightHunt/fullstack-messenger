@@ -47,6 +47,9 @@ export default {
         ...config,
         method: "PUT",
         data,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
       }
     );
     await fetchData();

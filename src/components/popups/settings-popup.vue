@@ -11,7 +11,7 @@
         </div>
       </header>
       <div class="settings__user settings-section">
-        <img :src="user.profileImage" alt="" class="settings__user__image" />
+        <img :src="profileImagePath()" alt="" class="settings__user__image" />
         <div class="settings__user__info">
           <div class="settings__user__info__username">
             {{ user.username }}
@@ -89,6 +89,7 @@ const closePopup = () => {
 
 const router = useRouter();
 const { user } = storeToRefs(useUserStore());
+const { profileImagePath } = useUserStore();
 
 const scale = ref(100);
 
