@@ -11,7 +11,10 @@
         <div class="user-settings__header__title">Edit profile</div>
       </header>
       <div class="user-settings__body">
-        <fileUpload @onupload="openResizer" />
+        <fileUpload
+          @onupload="openResizer"
+          :default-image="profileImagePath()"
+        />
         <v-text-field
           label="Username (required)"
           variant="underlined"
@@ -52,6 +55,7 @@ const { setImageSrc } = useResizer();
 
 const { update } = useUserStore();
 const { user } = storeToRefs(useUserStore());
+const { profileImagePath } = useUserStore();
 
 const data = reactive({
   username: user.value.username ?? "",
@@ -87,6 +91,7 @@ const openResizer = (event) => {
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/mixins/action-btn.scss";
 .user-settings {
   width: 490px;
   padding: 20px 30px;
@@ -96,13 +101,8 @@ const openResizer = (event) => {
   align-items: center;
 }
 .user-settings__header__icon {
+  @include action-btn();
   margin-right: 20px;
-  opacity: 0.5;
-  transition: opacity 0.2s ease;
-  cursor: pointer;
-  &:hover {
-    opacity: 1;
-  }
 }
 .user-settings__body {
   display: flex;

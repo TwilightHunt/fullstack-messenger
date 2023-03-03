@@ -78,27 +78,22 @@ import menuLink from "../menu/menu-link.vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../../stores/user.js";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import usePopups from "../../composables/usePopups";
 
 const { setActivePopup } = usePopups();
 
-const closePopup = () => {
-  setActivePopup("");
-};
-
-const router = useRouter();
 const { user } = storeToRefs(useUserStore());
 const { profileImagePath } = useUserStore();
 
 const scale = ref(100);
 
-const goTo = (path) => {
-  router.push({ name: path });
+const closePopup = () => {
+  setActivePopup("");
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/mixins/action-btn.scss";
 .settings {
   width: 490px;
 }
@@ -116,13 +111,8 @@ const goTo = (path) => {
   align-items: center;
 }
 .settings__header__icon {
+  @include action-btn();
   margin-left: 20px;
-  opacity: 0.5;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-  &:hover {
-    opacity: 1;
-  }
 }
 .settings__user {
   display: flex;
@@ -166,32 +156,4 @@ const goTo = (path) => {
 .settings__scale__slider__value {
   margin-left: 15px;
 }
-// .fade-leave-active {
-//   animation: fade 0.2s reverse;
-// }
-// @keyframes appear {
-//   0% {
-//     opacity: 0;
-//     transform: translate(0, -50%);
-//   }
-//   100% {
-//     opacity: 1;
-//     transform: translate(50%, -50%);
-//   }
-// }
-// @keyframes disappear {
-//   0% {
-//     opacity: 1;
-//   }
-//   100% {
-//     opacity: 0;
-//     transform: translate(100%, -50%);
-//   }
-// }
-// .fade-enter-active {
-//   animation: appear 0.3s;
-// }
-// .fade-leave-active {
-//   animation: disappear 0.3s;
-// }
 </style>

@@ -136,6 +136,7 @@ const upload = () => {
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/mixins/action-btn.scss";
 .file-resizer {
   padding: 30px 40px;
   overflow: hidden;
@@ -148,14 +149,8 @@ const upload = () => {
   align-items: center;
 }
 .file-resizer__header__icon-close {
-  opacity: 0.5;
-  transition: opacity 0.2s ease;
+  @include action-btn();
   margin-right: 30px;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 1;
-  }
 }
 .file-resizer__header__title {
   font-size: 1.2em;

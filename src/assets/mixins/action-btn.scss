@@ -1,0 +1,8 @@
+@mixin action-btn($base_opacity: 0.5){
+  cursor: pointer;
+  opacity: $base_opacity;
+  transition: opacity 0.2s ease;
+  &:hover {
+    opacity: 1;
+  }
+}

@@ -46,6 +46,7 @@ const openMenu = () => {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  border-right: 1px solid #ffffff25;
 }
 .browser__chats {
   @include scrollbar(#000);

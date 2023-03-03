@@ -15,18 +15,22 @@
 </template>
 
 <script setup>
-import { defineEmits } from "vue";
+import { onMounted } from "vue";
 
 const emit = defineEmits(["onupload"]);
+const props = defineProps({
+  defaultImage: String,
+});
 
-const previewImage = (event) => {
+onMounted(() => {
   const input = document.querySelector(".file-upload");
 
-  const image = event.target.files[0];
+  if (props.defaultImage) {
+    input.style.backgroundImage = `url(${props.defaultImage})`;
+    input.style.backgroundColor = "grey";
+  }
+});
 
-  input.style.backgroundImage = `url(${URL.createObjectURL(image)})`;
-  input.style.backgroundColor = "grey";
-};
 const onUpload = (event) => {
   emit("onupload", event);
 };
