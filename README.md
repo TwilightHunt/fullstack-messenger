@@ -1,29 +1,11 @@
-# fullstack-messager
+# Telegram clone (Messenger)
 
-This template should help get you started developing with Vue 3 in Vite.
+Full-stack clone of Telegram messenger 
 
-## Recommended IDE Setup
+## 🪄 Current features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
++ The opportunity to login/register in the app
++ Change nickname and bio
++ Resize image and set as profile picture
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+![ezgif com-video-to-gif](https://user-images.githubusercontent.com/55912590/222429580-993668df-366c-4404-b0c9-8c7af2fc46fe.gif)
