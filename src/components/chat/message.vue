@@ -23,7 +23,7 @@ export default {};
 }
 .message__box {
   display: inline-block;
-  max-width: 50%;
+  max-width: 52%;
   background: var(--color-background-soft);
   border-radius: 5px 20px 20px 5px;
   padding: 10px 10px 10px 8px;

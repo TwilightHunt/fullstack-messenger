@@ -1,7 +1,6 @@
 import { reactive, toRefs } from "vue";
 import { useFetch } from "./useFetch.js";
 
-const baseUrl = `${import.meta.env.VITE_SERVER_URL}/api`;
 const config = {
   method: "POST",
   withCredentials: true,
@@ -15,10 +14,10 @@ const config = {
 export default {
   async login(data) {
     let user = reactive({ data: {}, error: null, fetching: false });
-    const { response, error, fetching, fetchData } = useFetch(
-      `${baseUrl}/login`,
-      { ...config, data }
-    );
+    const { response, error, fetching, fetchData } = useFetch("/login", {
+      ...config,
+      data,
+    });
     await fetchData();
     user.data = response;
     user.error = error;
@@ -28,10 +27,10 @@ export default {
 
   async register(data) {
     let user = reactive({ data: {}, error: null, fetching: false });
-    const { response, error, fetching, fetchData } = useFetch(
-      `${baseUrl}/register`,
-      { ...config, data }
-    );
+    const { response, error, fetching, fetchData } = useFetch("/register", {
+      ...config,
+      data,
+    });
     await fetchData();
     user.data = response;
     user.error = error;
@@ -41,17 +40,14 @@ export default {
 
   async update(data) {
     let user = reactive({ data: {}, error: null, fetching: false });
-    const { response, error, fetching, fetchData } = useFetch(
-      `${baseUrl}/user-update`,
-      {
-        ...config,
-        method: "PUT",
-        data,
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      }
-    );
+    const { response, error, fetching, fetchData } = useFetch("/user-update", {
+      ...config,
+      method: "PUT",
+      data,
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
     await fetchData();
     user.data = response;
     user.error = error;

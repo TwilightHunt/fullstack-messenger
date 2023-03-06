@@ -18,89 +18,7 @@
         <v-icon class="chat__tool_options">mdi-dots-vertical</v-icon>
       </div>
     </header>
-    <div class="chat__body">
-      <message>MESSAGE</message>
-      <message mine>MESSAGE1</message>
-      <message
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message>MESSAGE3</message>
-      <message mine
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message mine
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message mine
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-      <message
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-        assumenda porro, placeat perspiciatis vel consequatur deserunt quod
-        dolore doloribus fugit hic possimus modi commodi magnam ducimus
-        voluptatibus mollitia accusamus ea?</message
-      >
-    </div>
+    <div class="chat__body"></div>
     <div class="chat__type-footer">
       <div class="chat__type-footer__input">
         <v-icon class="chat__tool_emoji chat__type-footer__action_emoji"
@@ -110,11 +28,14 @@
           placeholder="Message"
           type="text"
           class="chat__type-footer__input-box"
+          v-model="data.message"
         />
         <v-icon class="chat__tool_attach chat__type-footer__action_attach"
           >mdi-attachment</v-icon
         >
-        <v-icon class="chat__tool_voice chat__type-footer__action_voice"
+        <v-icon
+          class="chat__tool_voice chat__type-footer__action_voice"
+          @click="sendMessage"
           >mdi-microphone-outline</v-icon
         >
       </div>
@@ -124,6 +45,22 @@
 
 <script setup>
 import message from "./message.vue";
+import { useChatStore } from "../../stores/messages.js";
+import { reactive } from "vue";
+
+const useStore = useChatStore();
+
+console.log(useStore);
+
+const data = reactive({
+  message: "",
+  receiver: "naruto",
+});
+
+const sendMessage = async () => {
+  const messages = await useStore.send({ ...data });
+  console.log(messages);
+};
 </script>
 
 <style lang="scss" scoped>
