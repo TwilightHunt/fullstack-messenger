@@ -1,13 +1,13 @@
 <template>
-  <div class="chat-link">
+  <routerLink :to="`chat=${chat.receiver}`" class="chat-link">
     <img
-      src="https://i.pinimg.com/564x/ee/fd/71/eefd716e32199443a9b22b19e77add79.jpg"
+      :src="useUser.getImagePath(user?.profileImage)"
       alt=""
       class="chat-link__image"
     />
     <div class="chat-link__body">
       <div class="chat-link__top">
-        <div class="chat-link__top__name">TEMP</div>
+        <div class="chat-link__top__name">{{ chat.receiver }}</div>
         <div class="chat-link__top__info">
           <v-icon class="chat-link__top__icon" size="15">
             mdi-check-all
@@ -22,10 +22,24 @@
         <v-icon class="chat-link__pin" size="15">mdi-pin</v-icon>
       </div>
     </div>
-  </div>
+  </routerLink>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted, ref } from "vue";
+import useUser from "../../composables/useUser.js";
+
+const props = defineProps({
+  chat: Object,
+});
+
+const user = ref();
+
+onMounted(async () => {
+  const { data } = await useUser.getUserByUsername(props.chat.receiver);
+  user.value = data.value.user;
+});
+</script>
 
 <style lang="scss" scoped>
 .chat-link {

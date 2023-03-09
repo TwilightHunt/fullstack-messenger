@@ -7,7 +7,10 @@ axios.interceptors.response.use(
   (response) => response,
   (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401) {
+    if (
+      error.response.status === 401 &&
+      originalRequest.url !== `${baseUrl}/refresh`
+    ) {
       try {
         axios
           .get(`${baseUrl}/refresh`, {

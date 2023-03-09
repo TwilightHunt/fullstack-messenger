@@ -20,6 +20,11 @@ const router = createRouter({
       name: "register",
       component: Auth,
     },
+    {
+      path: "/chat=:name",
+      name: "chat",
+      component: HomeView,
+    },
   ],
 });
 

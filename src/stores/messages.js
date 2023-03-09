@@ -8,16 +8,24 @@ export const useChatStore = defineStore(
     const state = reactive({ chats: [] });
 
     const send = async (messageData) => {
-      const { data, error } = await useChat.send({ ...messageData });
+      const { error } = await useChat.send({ ...messageData });
+      if (error.value) {
+        const errorMessage = error.value.message;
+        throw new Error(errorMessage);
+      }
+      await getChats();
+    };
+
+    const getChats = async () => {
+      const { data, error } = await useChat.getChats();
       if (error.value) {
         const errorMessage = error.value;
         throw new Error(errorMessage);
       }
       state.chats = data.value.chats;
-      return state.chats;
     };
 
-    return { ...toRefs(state), send };
+    return { ...toRefs(state), send, getChats };
   },
   {
     persist: true,

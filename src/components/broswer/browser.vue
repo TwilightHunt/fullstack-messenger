@@ -22,13 +22,17 @@
       </div>
     </header>
     <div class="browser__chats">
-      <chatLink v-for="link in 3" />
+      <chatLink v-for="chat in chats" :chat="chat" />
     </div>
   </div>
 </template>
 
 <script setup>
 import chatLink from "./chat-link.vue";
+import { storeToRefs } from "pinia";
+import { useChatStore } from "../../stores/messages.js";
+
+const { chats } = storeToRefs(useChatStore());
 
 const openMenu = () => {
   const menu = document.querySelector(".menu");

@@ -13,7 +13,7 @@ const config = {
 
 export default {
   async login(data) {
-    let user = reactive({ data: {}, error: null, fetching: false });
+    const user = reactive({ data: {}, error: null, fetching: false });
     const { response, error, fetching, fetchData } = useFetch("/login", {
       ...config,
       data,
@@ -26,7 +26,7 @@ export default {
   },
 
   async register(data) {
-    let user = reactive({ data: {}, error: null, fetching: false });
+    const user = reactive({ data: {}, error: null, fetching: false });
     const { response, error, fetching, fetchData } = useFetch("/register", {
       ...config,
       data,
@@ -39,7 +39,7 @@ export default {
   },
 
   async update(data) {
-    let user = reactive({ data: {}, error: null, fetching: false });
+    const user = reactive({ data: {}, error: null, fetching: false });
     const { response, error, fetching, fetchData } = useFetch("/user-update", {
       ...config,
       method: "PUT",
@@ -53,5 +53,22 @@ export default {
     user.error = error;
     user.fetching = fetching;
     return { ...toRefs(user) };
+  },
+
+  async getUserByUsername(username) {
+    const user = reactive({ data: {}, error: null, fetching: false });
+    const { response, error, fetching, fetchData } = useFetch("/user", {
+      ...config,
+      data: { username },
+    });
+    await fetchData();
+    user.data = response;
+    user.error = error;
+    user.fetching = fetching;
+    return { ...toRefs(user) };
+  },
+
+  getImagePath(filename) {
+    return `${import.meta.env.VITE_SERVER_URL}/${filename}`;
   },
 };

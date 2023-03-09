@@ -50,11 +50,9 @@ import { reactive } from "vue";
 
 const useStore = useChatStore();
 
-console.log(useStore);
-
 const data = reactive({
   message: "",
-  receiver: "naruto",
+  receiver: "",
 });
 
 const sendMessage = async () => {

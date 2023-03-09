@@ -1,6 +1,6 @@
 import { reactive, toRefs } from "vue";
 import { defineStore } from "pinia";
-import useAuth from "../composables/useAuth.js";
+import useUser from "../composables/useUser.js";
 
 export const useUserStore = defineStore(
   "user",
@@ -8,10 +8,10 @@ export const useUserStore = defineStore(
     const state = reactive({ user: {} });
 
     const profileImagePath = () =>
-      `${import.meta.env.VITE_SERVER_URL}/${state.user.profileImage}`;
+      useUser.getImagePath(state.user.profileImage);
 
     const signIn = async (loginData) => {
-      const { data, error } = await useAuth.login({ ...loginData });
+      const { data, error } = await useUser.login({ ...loginData });
       if (error.value) {
         const errorMessage = error.value.response.data.error;
         throw new Error(errorMessage);
@@ -22,7 +22,7 @@ export const useUserStore = defineStore(
     };
 
     const signUp = async (registrationData) => {
-      const { data, error } = await useAuth.register({ ...registrationData });
+      const { data, error } = await useUser.register({ ...registrationData });
       if (error.value) {
         const errorMessage = error.value.response.data.error;
         throw new Error(errorMessage);
@@ -40,7 +40,7 @@ export const useUserStore = defineStore(
         formData.set(key, val);
       });
 
-      const { data, error } = await useAuth.update(formData);
+      const { data, error } = await useUser.update(formData);
 
       if (error.value) {
         const errorMessage = error.value.response.data.error;
