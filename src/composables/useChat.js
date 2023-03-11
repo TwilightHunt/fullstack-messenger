@@ -23,6 +23,7 @@ export default {
     await fetchData();
     return { error };
   },
+
   async getChats() {
     const chats = reactive({ data: {}, error: null, fetching: false });
 
@@ -37,6 +38,23 @@ export default {
     chats.data = response;
     chats.error = error;
     chats.fetching = fetching;
+
+    return { ...toRefs(chats) };
+  },
+
+  async getChatHistory(chatId, { offset = 0, amount = 10 }) {
+    const history = reactive({ data: {}, error: null, fetching: false });
+
+    const url = `/chat?${chatId}&offset=${offset}&amount=${amount}`;
+
+    const { response, error, fetching, fetchData } = useFetch(url, {
+      ...config,
+      method: "GET",
+    });
+    await fetchData();
+    history.data = response;
+    history.error = error;
+    history.fetching = fetching;
 
     return { ...toRefs(chats) };
   },

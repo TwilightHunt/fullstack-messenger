@@ -9,7 +9,7 @@
   --color-background-soft-hover: #f0f0f0;
 
   --color-heading: var(--vt-c-text-light-2);
-  --color-text: var(--vt-c-text-light-1);
+  --color-text: #000;
 
   --auth-bg-img: url("./images/backgrounds/background-light.jpg");
 }
@@ -22,7 +22,7 @@
   --color-background-soft-hover: #3b3b3b;
 
   --color-heading: var(--vt-c-text-dark-2);
-  --color-text: var(--vt-c-text-dark-1);
+  --color-text: #fff;
 
   --auth-bg-img: url("./images/backgrounds/background-dark.jpg");
 }

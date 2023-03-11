@@ -51,6 +51,7 @@ import { useChatStore } from "../../stores/messages.js";
 import { reactive, watch } from "vue";
 import { useRoute } from "vue-router";
 import useUser from "../../composables/useUser.js";
+import useChat from "../../composables/useChat.js";
 
 const route = useRoute();
 
@@ -62,8 +63,7 @@ const data = reactive({
 });
 
 const sendMessage = async () => {
-  const messages = await useChats.send({ ...data });
-  console.log(messages);
+  await useChats.send({ ...data });
 };
 
 watch(
