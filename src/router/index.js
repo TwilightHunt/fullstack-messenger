@@ -21,7 +21,7 @@ const router = createRouter({
       component: Auth,
     },
     {
-      path: "/chat=:name",
+      path: "/chat=:chat",
       name: "chat",
       component: HomeView,
     },

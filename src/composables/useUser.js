@@ -46,6 +46,7 @@ export default {
       data,
       headers: {
         "content-type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     await fetchData();

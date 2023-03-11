@@ -22,22 +22,26 @@
       </div>
     </header>
     <div class="browser__chats">
-      <chatLink v-for="chat in chats" :chat="chat" />
+      <chatLink v-for="chat in chatStore.chats" :chat="chat" />
     </div>
   </div>
 </template>
 
 <script setup>
 import chatLink from "./chat-link.vue";
-import { storeToRefs } from "pinia";
 import { useChatStore } from "../../stores/messages.js";
+import { onMounted } from "vue";
 
-const { chats } = storeToRefs(useChatStore());
+const chatStore = useChatStore();
 
 const openMenu = () => {
   const menu = document.querySelector(".menu");
   menu.classList.remove("_closed");
 };
+
+onMounted(async () => {
+  await chatStore.getChats();
+});
 </script>
 
 <style lang="scss" scoped>

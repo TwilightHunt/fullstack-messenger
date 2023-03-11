@@ -110,7 +110,6 @@ const registerData = reactive({
 const onLogin = async () => {
   try {
     const user = await userStore.signIn({ ...loginData });
-    console.log(user);
     router.push("/");
   } catch (error) {
     alert(error);

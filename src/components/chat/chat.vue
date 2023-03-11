@@ -1,14 +1,16 @@
 <template>
-  <div class="chat">
+  <div v-if="route.params.chat" class="chat">
     <header class="chat__header">
       <div class="chat__header__title">
         <img
-          src="https://i.pinimg.com/564x/4f/56/6b/4f566bf31494543742b6c7501af186f1.jpg"
+          :src="useUser.getImagePath(data.receiver.profileImage)"
           alt=""
           class="chat__header__avatar"
         />
         <div class="chat__header__title__info">
-          <div class="chat__header__title__name">NAME</div>
+          <div class="chat__header__title__name">
+            {{ data.receiver.username }}
+          </div>
           <div class="chat__header__title__status">online</div>
         </div>
       </div>
@@ -46,19 +48,31 @@
 <script setup>
 import message from "./message.vue";
 import { useChatStore } from "../../stores/messages.js";
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
+import { useRoute } from "vue-router";
+import useUser from "../../composables/useUser.js";
 
-const useStore = useChatStore();
+const route = useRoute();
+
+const useChats = useChatStore();
 
 const data = reactive({
   message: "",
-  receiver: "",
+  receiver: {},
 });
 
 const sendMessage = async () => {
-  const messages = await useStore.send({ ...data });
+  const messages = await useChats.send({ ...data });
   console.log(messages);
 };
+
+watch(
+  () => route.params.chat,
+  async (newValue) => {
+    const { data: res } = await useUser.getUserByUsername(newValue);
+    data.receiver = res.value.user;
+  }
+);
 </script>
 
 <style lang="scss" scoped>

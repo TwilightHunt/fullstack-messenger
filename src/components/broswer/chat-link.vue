@@ -2,7 +2,6 @@
   <routerLink :to="`chat=${chat.receiver}`" class="chat-link">
     <img
       :src="useUser.getImagePath(user?.profileImage)"
-      alt=""
       class="chat-link__image"
     />
     <div class="chat-link__body">
