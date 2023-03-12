@@ -1,9 +1,9 @@
 <template>
   <div class="message">
     <div class="message__box">
-      <div class="message__text">
+      <span class="message__text">
         <slot></slot>
-      </div>
+      </span>
       <span class="message__info">
         <span class="message__info__time"> 0:53 </span>
         <v-icon class="message__info__state"> mdi-check-all </v-icon>
@@ -30,10 +30,14 @@ export default {};
 }
 .message__info {
   float: right;
+  position: relative;
+  bottom: 0;
+  transform: translateY(25%);
 }
 .message__info__time {
   font-size: 0.875rem;
   margin-right: 5px;
+  margin-left: 10px;
   opacity: 0.7;
 }
 .message__info__state {

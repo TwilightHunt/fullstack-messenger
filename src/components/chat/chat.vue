@@ -57,7 +57,6 @@ import { useRoute } from "vue-router";
 import useUser from "../../composables/useUser.js";
 
 const route = useRoute();
-
 const useChats = useChatStore();
 
 const history = ref([]);
@@ -68,16 +67,32 @@ const data = reactive({
 });
 
 const sendMessage = async () => {
-  await useChats.send({ ...data });
-  data.history = await useChats.getChatHistory(data.receiver.username);
+  try {
+    await useChats.send({ ...data });
+    history.value = await useChats.getChatHistory(data.receiver.username);
+    data.message = "";
+    scrollDown();
+  } catch (error) {
+    alert(error);
+  }
+};
+
+const scrollDown = () => {
+  const chatBody = document.querySelector(".chat__body");
+  chatBody.scrollTop = chatBody.scrollHeight;
 };
 
 watch(
   () => route.params.chat,
   async (newValue) => {
-    const { data: res } = await useUser.getUserByUsername(newValue);
-    data.receiver = res.value.user;
-    history.value = await useChats.getChatHistory(data.receiver.username);
+    try {
+      const { data: res } = await useUser.getUserByUsername(newValue);
+      data.receiver = res.value.user;
+      history.value = await useChats.getChatHistory(data.receiver.username);
+      setTimeout(scrollDown, 10);
+    } catch (error) {
+      alert(error);
+    }
   }
 );
 </script>

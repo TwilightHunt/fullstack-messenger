@@ -42,7 +42,7 @@ export default {
     return { ...toRefs(chats) };
   },
 
-  async getChatHistory(chatId, { offset = 0, amount = 10 }) {
+  async getChatHistory(chatId, { offset = 0, amount = 20 }) {
     const history = reactive({ data: {}, error: null, fetching: false });
 
     const url = `/chat?id=${chatId}&offset=${offset}&amount=${amount}`;
