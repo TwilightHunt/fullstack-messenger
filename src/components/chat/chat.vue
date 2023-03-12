@@ -21,9 +21,12 @@
       </div>
     </header>
     <div class="chat__body">
-      <message v-for="message in history.slice().reverse()" mine>{{
-        message
-      }}</message>
+      <message
+        v-for="message in history.slice().reverse()"
+        mine
+        :time="message.time"
+        >{{ message.text }}</message
+      >
     </div>
     <div class="chat__type-footer">
       <div class="chat__type-footer__input">
@@ -42,7 +45,8 @@
         <v-icon
           class="chat__tool_voice chat__type-footer__action_voice"
           @click="sendMessage"
-          >mdi-microphone-outline</v-icon
+        >
+          {{ data.message ? "mdi-send" : "mdi-microphone-outline" }}</v-icon
         >
       </div>
     </div>
@@ -73,7 +77,7 @@ const sendMessage = async () => {
     data.message = "";
     scrollDown();
   } catch (error) {
-    alert(error);
+    console.log(error);
   }
 };
 
@@ -91,7 +95,7 @@ watch(
       history.value = await useChats.getChatHistory(data.receiver.username);
       setTimeout(scrollDown, 10);
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   }
 );

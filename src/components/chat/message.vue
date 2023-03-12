@@ -5,15 +5,24 @@
         <slot></slot>
       </span>
       <span class="message__info">
-        <span class="message__info__time"> 0:53 </span>
+        <span class="message__info__time"> {{ localTime }} </span>
         <v-icon class="message__info__state"> mdi-check-all </v-icon>
       </span>
     </div>
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+const props = defineProps({
+  time: Date,
+});
+
+const time = new Date(props.time);
+
+const localTime = time.toLocaleTimeString([], {
+  hour: "2-digit",
+  minute: "2-digit",
+});
 </script>
 
 <style lang="scss" scoped>
@@ -27,6 +36,7 @@ export default {};
   background: var(--color-background-soft);
   border-radius: 5px 20px 20px 5px;
   padding: 10px 10px 10px 8px;
+  color: #000;
 }
 .message__info {
   float: right;
@@ -49,11 +59,11 @@ export default {};
     margin-left: auto;
     border-radius: 20px 5px 5px 20px;
     padding: 10px;
+    color: #fff;
   }
   .message__info__state {
     font-size: 0.875rem;
     display: inline-block;
-    color: #fff;
   }
 }
 </style>
