@@ -25,7 +25,21 @@ export const useChatStore = defineStore(
       state.chats = data.value.chats;
     };
 
-    return { ...toRefs(state), send, getChats };
+    const getChatHistory = async (username, { offset, amount } = {}) => {
+      const chatId = state.chats.find((el) => el.receiver === username).id;
+
+      const { data, error } = await useChat.getChatHistory(chatId, {
+        offset,
+        amount,
+      });
+      if (error.value) {
+        const errorMessage = error.value;
+        throw new Error(errorMessage);
+      }
+      return data.value.history;
+    };
+
+    return { ...toRefs(state), send, getChats, getChatHistory };
   },
   {
     persist: true,

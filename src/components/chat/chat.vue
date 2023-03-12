@@ -20,7 +20,11 @@
         <v-icon class="chat__tool_options">mdi-dots-vertical</v-icon>
       </div>
     </header>
-    <div class="chat__body"></div>
+    <div class="chat__body">
+      <message v-for="message in history.slice().reverse()" mine>{{
+        message
+      }}</message>
+    </div>
     <div class="chat__type-footer">
       <div class="chat__type-footer__input">
         <v-icon class="chat__tool_emoji chat__type-footer__action_emoji"
@@ -48,14 +52,15 @@
 <script setup>
 import message from "./message.vue";
 import { useChatStore } from "../../stores/messages.js";
-import { reactive, watch } from "vue";
+import { reactive, watch, ref } from "vue";
 import { useRoute } from "vue-router";
 import useUser from "../../composables/useUser.js";
-import useChat from "../../composables/useChat.js";
 
 const route = useRoute();
 
 const useChats = useChatStore();
+
+const history = ref([]);
 
 const data = reactive({
   message: "",
@@ -64,6 +69,7 @@ const data = reactive({
 
 const sendMessage = async () => {
   await useChats.send({ ...data });
+  data.history = await useChats.getChatHistory(data.receiver.username);
 };
 
 watch(
@@ -71,6 +77,7 @@ watch(
   async (newValue) => {
     const { data: res } = await useUser.getUserByUsername(newValue);
     data.receiver = res.value.user;
+    history.value = await useChats.getChatHistory(data.receiver.username);
   }
 );
 </script>

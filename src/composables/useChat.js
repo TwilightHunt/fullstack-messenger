@@ -45,7 +45,7 @@ export default {
   async getChatHistory(chatId, { offset = 0, amount = 10 }) {
     const history = reactive({ data: {}, error: null, fetching: false });
 
-    const url = `/chat?${chatId}&offset=${offset}&amount=${amount}`;
+    const url = `/chat?id=${chatId}&offset=${offset}&amount=${amount}`;
 
     const { response, error, fetching, fetchData } = useFetch(url, {
       ...config,
@@ -56,6 +56,6 @@ export default {
     history.error = error;
     history.fetching = fetching;
 
-    return { ...toRefs(chats) };
+    return { ...toRefs(history) };
   },
 };
