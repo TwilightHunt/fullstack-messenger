@@ -13,16 +13,13 @@
 </template>
 
 <script setup>
+import { formatTime } from "../../composables/useDate.js";
+
 const props = defineProps({
   time: Date,
 });
 
-const time = new Date(props.time);
-
-const localTime = time.toLocaleTimeString([], {
-  hour: "2-digit",
-  minute: "2-digit",
-});
+const localTime = formatTime(props.time);
 </script>
 
 <style lang="scss" scoped>
