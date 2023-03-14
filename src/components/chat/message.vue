@@ -33,7 +33,7 @@ const localTime = formatTime(props.time);
   background: var(--color-background-soft);
   border-radius: 5px 20px 20px 5px;
   padding: 10px 10px 10px 8px;
-  color: #000;
+  color: #fff;
 }
 .message__info {
   float: right;
@@ -50,13 +50,12 @@ const localTime = formatTime(props.time);
 .message__info__state {
   display: none;
 }
-[mine] {
+[mine="true"] {
   .message__box {
     background: var(--accent-color);
     margin-left: auto;
     border-radius: 20px 5px 5px 20px;
     padding: 10px;
-    color: #fff;
   }
   .message__info__state {
     font-size: 0.875rem;

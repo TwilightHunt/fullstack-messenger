@@ -5,8 +5,7 @@
         <img
           :src="useUser.getImagePath(data.receiver.profileImage)"
           alt=""
-          class="chat__header__avatar"
-        />
+          class="chat__header__avatar" />
         <div class="chat__header__title__info">
           <div class="chat__header__title__name">
             {{ data.receiver.username }}
@@ -23,7 +22,7 @@
     <div class="chat__body">
       <message
         v-for="message in history.slice().reverse()"
-        mine
+        :mine="user.id === message.senter"
         :time="message.time"
         >{{ message.text }}</message
       >
@@ -37,15 +36,9 @@
           placeholder="Message"
           type="text"
           class="chat__type-footer__input-box"
-          v-model="data.message"
-        />
-        <v-icon class="chat__tool_attach chat__type-footer__action_attach"
-          >mdi-attachment</v-icon
-        >
-        <v-icon
-          class="chat__tool_voice chat__type-footer__action_voice"
-          @click="sendMessage"
-        >
+          v-model="data.message" />
+        <v-icon class="chat__tool_attach chat__type-footer__action_attach">mdi-attachment</v-icon>
+        <v-icon class="chat__tool_voice chat__type-footer__action_voice" @click="sendMessage">
           {{ data.message ? "mdi-send" : "mdi-microphone-outline" }}</v-icon
         >
       </div>
@@ -57,8 +50,12 @@
 import message from "./message.vue";
 import { useChatStore } from "../../stores/messages.js";
 import { reactive, watch, ref } from "vue";
+import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 import useUser from "../../composables/useUser.js";
+import { useUserStore } from "../../stores/user.js";
+
+const { user } = storeToRefs(useUserStore());
 
 const route = useRoute();
 const useChats = useChatStore();
