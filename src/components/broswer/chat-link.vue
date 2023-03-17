@@ -1,16 +1,11 @@
 <template>
   <routerLink :to="`chat=${chat.receiver}`" class="chat-link">
-    <img
-      :src="useUser.getImagePath(info.user?.profileImage)"
-      class="chat-link__image"
-    />
+    <img :src="useUser.getImagePath(info.user?.profileImage)" class="chat-link__image" />
     <div class="chat-link__body">
       <div class="chat-link__top">
         <div class="chat-link__top__name">{{ chat.receiver }}</div>
         <div class="chat-link__top__info">
-          <v-icon class="chat-link__top__icon" size="15">
-            mdi-check-all
-          </v-icon>
+          <v-icon class="chat-link__top__icon" size="15"> mdi-check-all </v-icon>
           <div class="chat-link__top__date">{{ info.lastMessage.time }}</div>
         </div>
       </div>
@@ -29,7 +24,7 @@
 <script setup>
 import { onMounted, ref, reactive } from "vue";
 import useUser from "../../composables/useUser.js";
-import { useChatStore } from "../../stores/messages";
+import { useChatStore } from "../../stores/chat.js";
 import { formatTime } from "../../composables/useDate.js";
 
 const { getChatHistory } = useChatStore();

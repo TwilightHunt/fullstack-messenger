@@ -48,7 +48,7 @@
 
 <script setup>
 import message from "./message.vue";
-import { useChatStore } from "../../stores/messages.js";
+import { useChatStore } from "../../stores/chat.js";
 import { reactive, watch, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
@@ -61,6 +61,28 @@ const route = useRoute();
 const useChats = useChatStore();
 
 const history = ref([]);
+const socket = ref();
+
+socket.value = new WebSocket("ws://localhost:8080");
+
+socket.value.onopen = () => {
+  const message = {
+    event: "connect",
+    placeholder: {
+      id: user.value.id,
+    },
+  };
+  socket.value.send(JSON.stringify(message));
+};
+
+socket.value.onmessage = async (event) => {
+  const message = JSON.parse(event.data);
+
+  if (message.event === "send") {
+    history.value = await useChats.getChatHistory(data.receiver.username);
+    scrollDown();
+  }
+};
 
 const data = reactive({
   message: "",
@@ -70,8 +92,19 @@ const data = reactive({
 const sendMessage = async () => {
   try {
     await useChats.send({ ...data });
+
+    const message = {
+      event: "send",
+      placeholder: {
+        user: user.value,
+        receiver: data.receiver,
+        message: data.message,
+      },
+    };
+    socket.value.send(JSON.stringify(message));
     history.value = await useChats.getChatHistory(data.receiver.username);
     data.message = "";
+
     scrollDown();
   } catch (error) {
     console.log(error);

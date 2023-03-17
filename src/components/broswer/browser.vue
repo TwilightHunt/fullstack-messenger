@@ -7,17 +7,11 @@
         icon
         class="browser__header__burger-button"
         :size="40"
-        @click="openMenu"
-      >
+        @click="openMenu">
         <v-icon class="browser__header__burger-icon"> mdi-menu </v-icon>
       </v-btn>
       <div class="browser__header__search">
-        <input
-          type="text"
-          class="browser__header__input"
-          placeholder="Search"
-          :size="20"
-        />
+        <input type="text" class="browser__header__input" placeholder="Search" :size="20" />
         <v-icon class="browser__header__input-icon"> mdi-magnify </v-icon>
       </div>
     </header>
@@ -29,7 +23,7 @@
 
 <script setup>
 import chatLink from "./chat-link.vue";
-import { useChatStore } from "../../stores/messages.js";
+import { useChatStore } from "../../stores/chat.js";
 import { onMounted } from "vue";
 
 const chatStore = useChatStore();
