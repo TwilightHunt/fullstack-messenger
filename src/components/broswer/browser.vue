@@ -43,8 +43,8 @@ onMounted(async () => {
 
 .browser {
   background-color: var(--color-background-soft);
-  max-width: 33vw;
-  min-width: 20vw;
+  //width: 20vw;
+  flex: 0 0 20%;
   display: flex;
   flex-direction: column;
   height: 100vh;

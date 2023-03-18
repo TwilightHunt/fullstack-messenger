@@ -20,13 +20,14 @@
       </div>
     </header>
     <div class="chat__body">
-      <div id="observer"></div>
       <message
-        v-for="message in history.slice().reverse()"
+        v-for="message in history"
         :mine="user.id === message.senter"
         :time="message.time"
+        :ref="message._id"
         >{{ message.text }}</message
       >
+      <div ref="target"></div>
     </div>
     <div class="chat__type-footer">
       <div class="chat__type-footer__input">
@@ -37,7 +38,9 @@
           placeholder="Message"
           type="text"
           class="chat__type-footer__input-box"
-          v-model="data.message" />
+          v-model="data.message"
+          @keyup="onInputKeyup"
+          ref="input" />
         <v-icon class="chat__tool_attach chat__type-footer__action_attach">mdi-attachment</v-icon>
         <v-icon class="chat__tool_voice chat__type-footer__action_voice" @click="sendMessage">
           {{ data.message ? "mdi-send" : "mdi-microphone-outline" }}</v-icon
@@ -50,7 +53,7 @@
 <script setup>
 import message from "./message.vue";
 import { useChatStore } from "../../stores/chat.js";
-import { reactive, watch, ref, onMounted } from "vue";
+import { reactive, watch, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 import useUser from "../../composables/useUser.js";
@@ -63,6 +66,9 @@ const useChats = useChatStore();
 
 const history = ref([]);
 const socket = ref();
+const input = ref();
+const target = ref();
+
 let currentOffset = 0;
 const offset = 20;
 
@@ -107,16 +113,10 @@ const sendMessage = async () => {
     socket.value.send(JSON.stringify(message));
     history.value = await useChats.getChatHistory(data.receiver.username);
     data.message = "";
-
-    scrollDown();
+    input.value.focus();
   } catch (error) {
     console.log(error);
   }
-};
-
-const scrollDown = () => {
-  const chatBody = document.querySelector(".chat__body");
-  chatBody.scrollTop = chatBody.scrollHeight;
 };
 
 watch(
@@ -126,7 +126,8 @@ watch(
       const { data: res } = await useUser.getUserByUsername(newValue);
       data.receiver = res.value.user;
       history.value = await useChats.getChatHistory(data.receiver.username);
-      setTimeout(onRender, 10);
+      input.value.focus();
+      setObserver();
     } catch (error) {
       console.log(error);
     }
@@ -149,15 +150,16 @@ const setObserver = () => {
     }
   };
 
-  let target = document.getElementById("observer");
+  console.log(target.value);
 
   let observer = new IntersectionObserver(intersectionCallback, options);
-  observer.observe(target);
+  observer.observe(target.value);
 };
 
-const onRender = () => {
-  scrollDown();
-  setObserver();
+const onInputKeyup = async (event) => {
+  if (event.key === "Enter") {
+    await sendMessage();
+  }
 };
 </script>
 
@@ -201,9 +203,13 @@ const onRender = () => {
   flex: 0 0 auto;
   padding: 15px 30px;
   overflow-y: scroll;
+  height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
   max-height: calc(100vh - 110px);
   @include scrollbar(#fff, $width: 0);
 }
+
 .chat__type-footer {
   margin-top: auto;
   display: flex;

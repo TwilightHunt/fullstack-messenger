@@ -61,6 +61,14 @@ const updateChatPreview = async () => {
   width: 100%;
   font-size: 0.875em;
 }
+.chat-link__last-message {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .chat-link__image {
   width: 50px;
   height: 50px;
