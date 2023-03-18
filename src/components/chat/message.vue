@@ -16,7 +16,7 @@
 import { formatTime } from "../../composables/useDate.js";
 
 const props = defineProps({
-  time: Date,
+  time: String,
 });
 
 const localTime = formatTime(props.time);

@@ -20,6 +20,7 @@
       </div>
     </header>
     <div class="chat__body">
+      <div id="observer"></div>
       <message
         v-for="message in history.slice().reverse()"
         :mine="user.id === message.senter"
@@ -49,7 +50,7 @@
 <script setup>
 import message from "./message.vue";
 import { useChatStore } from "../../stores/chat.js";
-import { reactive, watch, ref } from "vue";
+import { reactive, watch, ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 import useUser from "../../composables/useUser.js";
@@ -62,6 +63,8 @@ const useChats = useChatStore();
 
 const history = ref([]);
 const socket = ref();
+let currentOffset = 0;
+const offset = 20;
 
 socket.value = new WebSocket("ws://localhost:8080");
 
@@ -123,12 +126,39 @@ watch(
       const { data: res } = await useUser.getUserByUsername(newValue);
       data.receiver = res.value.user;
       history.value = await useChats.getChatHistory(data.receiver.username);
-      setTimeout(scrollDown, 10);
+      setTimeout(onRender, 10);
     } catch (error) {
       console.log(error);
     }
   }
 );
+
+const setObserver = () => {
+  let options = {
+    rootMargin: "5px",
+    threshold: 0.5,
+  };
+
+  const intersectionCallback = async (entries) => {
+    if (entries[0].isIntersecting) {
+      currentOffset += offset;
+      const newMessages = await useChats.getChatHistory(data.receiver.username, {
+        offset: currentOffset,
+      });
+      history.value = [...history.value, ...newMessages];
+    }
+  };
+
+  let target = document.getElementById("observer");
+
+  let observer = new IntersectionObserver(intersectionCallback, options);
+  observer.observe(target);
+};
+
+const onRender = () => {
+  scrollDown();
+  setObserver();
+};
 </script>
 
 <style lang="scss" scoped>
