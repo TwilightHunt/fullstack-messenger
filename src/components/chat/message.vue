@@ -9,7 +9,15 @@
         <v-icon class="message__info__state"> mdi-check-all </v-icon>
       </span>
     </div>
-    <bubble v-if="bubbleIsActive" :items="messageArray" blurred />
+    <bubble
+      v-if="bubbleIsActive"
+      :class="`message__bubble ${invertedX ? '_invertedByX' : ''} ${
+        invertedY ? '_invertedByY' : ''
+      }`"
+      :items="messageArray"
+      :top="`${bubbleTop}px`"
+      :left="`${bubbleLeft}px`"
+      blurred />
   </div>
 </template>
 
@@ -24,14 +32,29 @@ const props = defineProps({
 });
 
 const bubbleIsActive = ref(false);
+const invertedX = ref();
+const invertedY = ref();
+const bubbleTop = ref();
+const bubbleLeft = ref();
+
 const localTime = formatTime(props.time);
 
-const activateMenu = () => {
+const activateMenu = (e) => {
+  if (e.target.classList[0].includes("bubble-item")) {
+    return;
+  }
+
   bubbleIsActive.value = true;
+
+  bubbleTop.value = e.clientY + 10;
+  bubbleLeft.value = e.clientX + 10;
 
   setBubbleListeners(() => {
     bubbleIsActive.value = false;
   });
+
+  invertedY.value = !!(screen.height / 2 - e.clientY < 0);
+  invertedX.value = !!(screen.width / 2 - e.clientX < 0);
 };
 </script>
 
@@ -39,7 +62,6 @@ const activateMenu = () => {
 .message {
   padding: 2.5px 0;
   display: flex;
-  position: relative;
 }
 .message__box {
   display: inline-block;
@@ -64,6 +86,18 @@ const activateMenu = () => {
 .message__info__state {
   display: none;
 }
+.message__bubble {
+  --translateX: 0;
+  --translateY: 0;
+  transform: translate(var(--translateX), var(--translateY));
+  &._invertedByX {
+    --translateX: -100%;
+  }
+  &._invertedByY {
+    --translateY: -100%;
+  }
+}
+
 [mine="true"] {
   .message__box {
     background: var(--accent-color);

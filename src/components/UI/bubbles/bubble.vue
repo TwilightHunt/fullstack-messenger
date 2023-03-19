@@ -1,5 +1,5 @@
 <template>
-  <div class="bubble">
+  <div class="bubble" :style="`top:${top}; left: ${left};`">
     <bubble-item
       v-for="item in items"
       :icon-name="item.iconName"
@@ -13,6 +13,8 @@ import bubbleItem from "./bubble-item.vue";
 
 defineProps({
   items: Array,
+  top: String,
+  left: String,
 });
 </script>
 
