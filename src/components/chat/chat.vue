@@ -16,8 +16,9 @@
       <div class="chat__header__tools">
         <v-icon class="chat__tool_search">mdi-magnify</v-icon>
         <v-icon class="chat__tool_call">mdi-phone-outline</v-icon>
-        <v-icon class="chat__tool_options">mdi-dots-vertical</v-icon>
+        <v-icon class="chat__tool_options" @click="openOptions">mdi-dots-vertical</v-icon>
       </div>
+      <bubble class="chat__header__options-bubble" v-if="optionsIsActive" :items="optionsArray" />
     </header>
     <div class="chat__body">
       <message
@@ -51,16 +52,20 @@
 </template>
 
 <script setup>
-import message from "./message.vue";
-import { useChatStore } from "../../stores/chat.js";
 import { reactive, watch, ref } from "vue";
-import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
+
+import message from "./message.vue";
+import bubble from "../UI/bubbles/bubble.vue";
+
+import { useChatStore } from "../../stores/chat.js";
+import { storeToRefs } from "pinia";
+
 import useUser from "../../composables/useUser.js";
 import { useUserStore } from "../../stores/user.js";
+import { setBubbleListeners, optionsArray } from "../../composables/useBubble.js";
 
 const { user } = storeToRefs(useUserStore());
-
 const route = useRoute();
 const useChats = useChatStore();
 
@@ -72,7 +77,7 @@ const target = ref();
 let currentOffset = 0;
 const offset = 20;
 
-socket.value = new WebSocket("ws://localhost:8080");
+socket.value = new WebSocket(import.meta.env.VITE_WS_URL);
 
 socket.value.onopen = () => {
   const message = {
@@ -89,7 +94,6 @@ socket.value.onmessage = async (event) => {
 
   if (message.event === "send") {
     history.value = await useChats.getChatHistory(data.receiver.username);
-    scrollDown();
   }
 };
 
@@ -150,8 +154,6 @@ const setObserver = () => {
     }
   };
 
-  console.log(target.value);
-
   let observer = new IntersectionObserver(intersectionCallback, options);
   observer.observe(target.value);
 };
@@ -160,6 +162,16 @@ const onInputKeyup = async (event) => {
   if (event.key === "Enter") {
     await sendMessage();
   }
+};
+
+const optionsIsActive = ref(false);
+
+const openOptions = () => {
+  optionsIsActive.value = true;
+
+  setBubbleListeners(() => {
+    optionsIsActive.value = false;
+  });
 };
 </script>
 
@@ -176,8 +188,15 @@ const onInputKeyup = async (event) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
   background: var(--color-background-soft);
   padding: 8px 25px;
+}
+.chat__header__options-bubble {
+  right: 0;
+  top: 100%;
+  margin-top: 6px;
+  margin-right: 10px;
 }
 .chat__header__title {
   display: flex;
@@ -223,6 +242,7 @@ const onInputKeyup = async (event) => {
   width: 100%;
   padding: 15px 60px;
   background: var(--color-background-soft);
+  color: var(--color-text);
   &:focus {
     outline-width: 0;
   }

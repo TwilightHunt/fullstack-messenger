@@ -1,5 +1,5 @@
 <template>
-  <div class="message">
+  <div class="message" @contextmenu.prevent="activateMenu">
     <div class="message__box">
       <span class="message__text">
         <slot></slot>
@@ -9,23 +9,37 @@
         <v-icon class="message__info__state"> mdi-check-all </v-icon>
       </span>
     </div>
+    <bubble v-if="bubbleIsActive" :items="messageArray" blurred />
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { formatTime } from "../../composables/useDate.js";
+import bubble from "../UI/bubbles/bubble.vue";
+import { setBubbleListeners, messageArray } from "../../composables/useBubble.js";
 
 const props = defineProps({
   time: String,
 });
 
+const bubbleIsActive = ref(false);
 const localTime = formatTime(props.time);
+
+const activateMenu = () => {
+  bubbleIsActive.value = true;
+
+  setBubbleListeners(() => {
+    bubbleIsActive.value = false;
+  });
+};
 </script>
 
 <style lang="scss" scoped>
 .message {
-  margin: 5px 0;
+  padding: 2.5px 0;
   display: flex;
+  position: relative;
 }
 .message__box {
   display: inline-block;

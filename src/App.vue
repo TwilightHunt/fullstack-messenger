@@ -17,6 +17,7 @@ onMounted(() => {
   router.push(localStorage.getItem("token") ? "/" : "/login");
 });
 </script>
+
 <template>
   <RouterView />
 </template>
