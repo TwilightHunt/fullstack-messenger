@@ -28,6 +28,12 @@ export const optionsArray = [
     divided: true,
   },
 ];
+export const logoutArray = [
+  {
+    text: "Log Out",
+    iconName: "mdi-logout",
+  },
+];
 
 export const messageArray = [
   {

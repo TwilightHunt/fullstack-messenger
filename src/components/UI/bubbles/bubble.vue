@@ -22,10 +22,10 @@ defineProps({
   border-radius: 20px;
   overflow-x: hidden;
   padding: 5px 3px;
+  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
 }
 [blurred] {
   background-color: rgb(33, 33, 33, 0.8);
   backdrop-filter: blur(8px);
-  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
 }
 </style>

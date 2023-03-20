@@ -7,8 +7,7 @@ export const useUserStore = defineStore(
   () => {
     const state = reactive({ user: {} });
 
-    const profileImagePath = () =>
-      useUser.getImagePath(state.user.profileImage);
+    const profileImagePath = () => useUser.getImagePath(state.user.profileImage);
 
     const signIn = async (loginData) => {
       const { data, error } = await useUser.login({ ...loginData });
@@ -32,6 +31,17 @@ export const useUserStore = defineStore(
       return state.user;
     };
 
+    const logout = async () => {
+      const { error } = await useUser.logout();
+      if (error.value) {
+        console.log(error.value);
+        const errorMessage = error.value.error;
+        throw new Error(errorMessage);
+      }
+      state.user = {};
+      localStorage.removeItem("token");
+    };
+
     const update = async (newData) => {
       const entries = Object.entries({ ...state.user, ...newData });
 
@@ -49,7 +59,7 @@ export const useUserStore = defineStore(
       state.user = data.value.user;
       return state.user;
     };
-    return { ...toRefs(state), signIn, signUp, update, profileImagePath };
+    return { ...toRefs(state), signIn, signUp, update, logout, profileImagePath };
   },
   {
     persist: true,

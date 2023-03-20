@@ -25,6 +25,15 @@ export default {
     return { ...toRefs(user) };
   },
 
+  async logout() {
+    const { error, fetchData } = useFetch("/logout", {
+      ...config,
+      method: "GET",
+    });
+    await fetchData();
+    return { error };
+  },
+
   async register(data) {
     const user = reactive({ data: {}, error: null, fetching: false });
     const { response, error, fetching, fetchData } = useFetch("/register", {
