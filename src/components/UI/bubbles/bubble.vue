@@ -1,10 +1,6 @@
 <template>
   <div class="bubble" :style="`top:${top}; left: ${left};`">
-    <bubble-item
-      v-for="item in items"
-      :icon-name="item.iconName"
-      :text="item.text"
-      :color="item?.color" />
+    <bubble-item v-for="item in items" :info="item" />
   </div>
 </template>
 
@@ -30,5 +26,6 @@ defineProps({
 [blurred] {
   background-color: rgb(33, 33, 33, 0.8);
   backdrop-filter: blur(8px);
+  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
 }
 </style>

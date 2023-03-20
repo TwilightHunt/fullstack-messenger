@@ -9,15 +9,17 @@
         <v-icon class="message__info__state"> mdi-check-all </v-icon>
       </span>
     </div>
-    <bubble
-      v-if="bubbleIsActive"
-      :class="`message__bubble ${invertedX ? '_invertedByX' : ''} ${
-        invertedY ? '_invertedByY' : ''
-      }`"
-      :items="messageArray"
-      :top="`${bubbleTop}px`"
-      :left="`${bubbleLeft}px`"
-      blurred />
+    <Transition name="appear">
+      <bubble
+        v-if="bubbleIsActive"
+        :class="`message__bubble ${invertedX ? '_invertedByX' : ''} ${
+          invertedY ? '_invertedByY' : ''
+        }`"
+        :items="messageArray"
+        :top="`${bubbleTop}px`"
+        :left="`${bubbleLeft}px`"
+        blurred />
+    </Transition>
   </div>
 </template>
 
@@ -59,6 +61,10 @@ const activateMenu = (e) => {
 </script>
 
 <style lang="scss" scoped>
+* {
+  --translateX: 0;
+  --translateY: 0;
+}
 .message {
   padding: 2.5px 0;
   display: flex;
@@ -87,8 +93,6 @@ const activateMenu = (e) => {
   display: none;
 }
 .message__bubble {
-  --translateX: 0;
-  --translateY: 0;
   transform: translate(var(--translateX), var(--translateY));
   &._invertedByX {
     --translateX: -100%;
@@ -108,6 +112,22 @@ const activateMenu = (e) => {
   .message__info__state {
     font-size: 0.875rem;
     display: inline-block;
+  }
+}
+.appear-enter-active {
+  animation: appear 0.2s;
+}
+.appear-leave-active {
+  animation: appear 0.2s reverse;
+}
+@keyframes appear {
+  0% {
+    transform: scale(0) translate(var(--translateX), var(--translateY));
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translate(var(--translateX), var(--translateY));
+    opacity: 1;
   }
 }
 </style>

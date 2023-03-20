@@ -18,7 +18,9 @@
         <v-icon class="chat__tool_call">mdi-phone-outline</v-icon>
         <v-icon class="chat__tool_options" @click="openOptions">mdi-dots-vertical</v-icon>
       </div>
-      <bubble class="chat__header__options-bubble" v-if="optionsIsActive" :items="optionsArray" />
+      <Transition name="appear">
+        <bubble class="chat__header__options-bubble" v-if="optionsIsActive" :items="optionsArray" />
+      </Transition>
     </header>
     <div class="chat__body">
       <message
@@ -166,11 +168,13 @@ const onInputKeyup = async (event) => {
 
 const optionsIsActive = ref(false);
 
-const openOptions = () => {
-  optionsIsActive.value = true;
+const openOptions = (e) => {
+  optionsIsActive.value = !optionsIsActive.value;
 
-  setBubbleListeners(() => {
-    optionsIsActive.value = false;
+  setBubbleListeners((event) => {
+    if (!event.target.className.includes("chat__tool_options")) {
+      optionsIsActive.value = false;
+    }
   });
 };
 </script>
@@ -263,5 +267,22 @@ const openOptions = () => {
 }
 [class*="chat__tool_"] {
   @include action-btn($base_opacity: 0.7);
+}
+.appear-enter-active {
+  animation: appear 0.2s;
+}
+.appear-leave-active {
+  animation: appear 0.2s reverse;
+}
+@keyframes appear {
+  0% {
+    transform: scale(0);
+    transform-origin: top right;
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 </style>

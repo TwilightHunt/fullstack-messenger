@@ -1,20 +1,31 @@
+const bubbleRed = "#D34041";
+
 export const optionsArray = [
   {
-    text: "Reply",
-    iconName: "mdi-reply-outline",
+    text: "Video Call",
+    iconName: "mdi-video-outline",
   },
   {
-    text: "Edit",
-    iconName: "mdi-pencil-outline",
+    text: "Mute",
+    iconName: "mdi-bell-ring-outline",
   },
   {
-    text: "Copy Text",
-    iconName: "mdi-content-copy",
+    text: "Select messages",
+    iconName: "mdi-check-circle-outline",
   },
   {
-    text: "Delete",
+    text: "Report",
+    iconName: "mdi-flag-variant-outline",
+  },
+  {
+    text: "Gift premium",
+    iconName: "mdi-gift-outline",
+  },
+  {
+    text: "Delete chat",
     iconName: "mdi-delete-outline",
-    color: "red",
+    color: bubbleRed,
+    divided: true,
   },
 ];
 
@@ -32,9 +43,21 @@ export const messageArray = [
     iconName: "mdi-content-copy",
   },
   {
+    text: "Pin",
+    iconName: "mdi-pin-outline",
+  },
+  {
+    text: "Forward",
+    iconName: "mdi-share-outline",
+  },
+  {
+    text: "Select",
+    iconName: "mdi-check-circle-outline",
+  },
+  {
     text: "Delete",
     iconName: "mdi-delete-outline",
-    color: "red",
+    color: bubbleRed,
   },
 ];
 
@@ -42,17 +65,15 @@ export const setBubbleListeners = (callback) => {
   addEventListener(
     "click",
     function (e) {
-      if (!e.target.classList[0].includes("bubble-item")) {
-        callback();
-      }
+      callback(e);
     },
-    { capture: true }
+    { capture: true, once: true }
   );
   addEventListener(
     "contextmenu",
     function (e) {
-      callback();
+      callback(e);
     },
-    { capture: true }
+    { capture: true, once: true }
   );
 };
