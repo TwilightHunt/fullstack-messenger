@@ -182,6 +182,7 @@ const openOptions = (e) => {
 <style lang="scss" scoped>
 @import "../../assets/mixins/action-btn.scss";
 @import "../../assets/mixins/scrollbar.scss";
+
 .chat {
   flex: 1 1 auto;
   display: flex;

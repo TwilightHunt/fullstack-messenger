@@ -46,6 +46,8 @@ const activateMenu = (e) => {
     return;
   }
 
+  document.querySelector(".chat__body").style.overflowY = "hidden";
+
   bubbleIsActive.value = true;
 
   bubbleTop.value = e.clientY + 10;
@@ -53,6 +55,7 @@ const activateMenu = (e) => {
 
   setBubbleListeners(() => {
     bubbleIsActive.value = false;
+    document.querySelector(".chat__body").style.overflowY = "scroll";
   });
 
   invertedY.value = !!(screen.height / 2 - e.clientY < 0);

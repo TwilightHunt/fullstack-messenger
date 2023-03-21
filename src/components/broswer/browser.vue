@@ -11,7 +11,7 @@
         <v-icon class="browser__header__burger-icon"> mdi-menu </v-icon>
       </v-btn>
       <div class="browser__header__search">
-        <input type="text" class="browser__header__input" placeholder="Search" :size="20" />
+        <search />
         <v-icon class="browser__header__input-icon"> mdi-magnify </v-icon>
       </div>
     </header>
@@ -25,6 +25,7 @@
 import chatLink from "./chat-link.vue";
 import { useChatStore } from "../../stores/chat.js";
 import { onMounted } from "vue";
+import search from "./browser-search.vue";
 
 const chatStore = useChatStore();
 
