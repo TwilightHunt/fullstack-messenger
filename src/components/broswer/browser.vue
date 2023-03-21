@@ -11,10 +11,22 @@
         <v-icon class="browser__header__burger-icon"> mdi-menu </v-icon>
       </v-btn>
       <div class="browser__header__search">
-        <search />
+        <input
+          type="text"
+          class="browser__header__input"
+          placeholder="Search"
+          :size="20"
+          @input="search" />
         <v-icon class="browser__header__input-icon"> mdi-magnify </v-icon>
       </div>
     </header>
+    <div class="browser__search">
+      <search-link
+        v-for="link in result"
+        :image="link.profileImage"
+        :title="link.username"
+        :info="link.email" />
+    </div>
     <div class="browser__chats">
       <chatLink v-for="chat in chatStore.chats" :chat="chat" />
     </div>
@@ -25,7 +37,9 @@
 import chatLink from "./chat-link.vue";
 import { useChatStore } from "../../stores/chat.js";
 import { onMounted } from "vue";
-import search from "./browser-search.vue";
+import searchLink from "./search-link.vue";
+import { ref } from "vue";
+import { useFetch } from "../../composables/useFetch";
 
 const chatStore = useChatStore();
 
@@ -37,6 +51,22 @@ const openMenu = () => {
 onMounted(async () => {
   await chatStore.getChats();
 });
+
+const result = ref();
+
+const search = async (event) => {
+  const { response, error, fetching, fetchData } = useFetch(
+    `/search/users?text=${event.target.value}`,
+    {
+      method: "GET",
+    }
+  );
+  await fetchData();
+  if (error.value) {
+    console.error(error.value.error);
+  }
+  result.value = response.value.result;
+};
 </script>
 
 <style lang="scss" scoped>
