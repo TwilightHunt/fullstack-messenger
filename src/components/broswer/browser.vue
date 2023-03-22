@@ -26,7 +26,8 @@
         v-for="link in result"
         :image="link.profileImage"
         :title="link.username"
-        :info="link.email" />
+        :info="link.email"
+        :key="link.username" />
     </div>
     <div class="browser__chats" v-if="!query">
       <chatLink v-for="chat in chatStore.chats" :chat="chat" />

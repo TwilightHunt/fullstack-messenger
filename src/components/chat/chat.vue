@@ -27,7 +27,7 @@
         v-for="message in history"
         :mine="user.id === message.senter"
         :time="message.time"
-        :ref="message._id"
+        :key="message._id"
         >{{ message.text }}</message
       >
       <div ref="target"></div>
