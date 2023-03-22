@@ -30,6 +30,10 @@
         :key="message._id"
         >{{ message.text }}</message
       >
+      <chat-state
+        v-if="history.length === 0"
+        :title="'No messages here yet...'"
+        :text="'Send a message to start the dialog'" />
       <div ref="target"></div>
     </div>
     <div class="chat__type-footer">
@@ -59,6 +63,7 @@ import { useRoute } from "vue-router";
 
 import message from "./message.vue";
 import bubble from "../UI/bubbles/bubble.vue";
+import chatState from "./chat-state.vue";
 
 import { useChatStore } from "../../stores/chat.js";
 import { storeToRefs } from "pinia";
@@ -231,6 +236,8 @@ const openOptions = (e) => {
   display: flex;
   flex-direction: column-reverse;
   max-height: calc(100vh - 110px);
+  background-size: cover;
+  background-image: url("@/assets/images/backgrounds/chat-bg-dark.jpg");
   @include scrollbar(#fff, $width: 0);
 }
 
