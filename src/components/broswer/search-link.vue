@@ -1,11 +1,11 @@
 <template>
-  <div class="search-link">
+  <router-link :to="`chat=${title}`" class="search-link">
     <img :src="imageSrc" alt="" class="search-link__img" />
     <div class="search-link__body">
       <div class="search-link__body__title">{{ title }}</div>
       <div class="search-link__body__info">{{ info }}</div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script setup>

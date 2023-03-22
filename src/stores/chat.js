@@ -26,7 +26,11 @@ export const useChatStore = defineStore(
     };
 
     const getChatHistory = async (username, { offset, amount } = {}) => {
-      const chatId = state.chats.find((el) => el.receiver === username).id;
+      const chatId = state.chats.find((el) => el.receiver === username)?.id;
+
+      if (!chatId) {
+        return [];
+      }
 
       const { data, error } = await useChat.getChatHistory(chatId, {
         offset,

@@ -16,7 +16,8 @@
           class="browser__header__input"
           placeholder="Search"
           :size="20"
-          @input="search" />
+          @input="search"
+          v-model="query" />
         <v-icon class="browser__header__input-icon"> mdi-magnify </v-icon>
       </div>
     </header>
@@ -27,7 +28,7 @@
         :title="link.username"
         :info="link.email" />
     </div>
-    <div class="browser__chats">
+    <div class="browser__chats" v-if="!query">
       <chatLink v-for="chat in chatStore.chats" :chat="chat" />
     </div>
   </div>
@@ -53,14 +54,12 @@ onMounted(async () => {
 });
 
 const result = ref();
+const query = ref();
 
-const search = async (event) => {
-  const { response, error, fetching, fetchData } = useFetch(
-    `/search/users?text=${event.target.value}`,
-    {
-      method: "GET",
-    }
-  );
+const search = async () => {
+  const { response, error, fetching, fetchData } = useFetch(`/search/users?text=${query.value}`, {
+    method: "GET",
+  });
   await fetchData();
   if (error.value) {
     console.error(error.value.error);
