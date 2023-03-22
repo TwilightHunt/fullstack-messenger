@@ -14,3 +14,10 @@ Full-stack clone of Telegram messenger
 
 
 ![ezgif com-video-to-gif](https://user-images.githubusercontent.com/55912590/226356214-5a23924e-e94c-421b-a8ff-cc14d8708274.gif)
+
+
+## 🖼️ Gallery
+
+#### Chat screen: 
+
+![image](https://user-images.githubusercontent.com/55912590/226853123-63f7a7cb-901a-42a2-ad6c-2235b8277ecf.png)
