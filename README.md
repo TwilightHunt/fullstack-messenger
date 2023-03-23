@@ -10,6 +10,7 @@ Full-stack clone of Telegram messenger
 
 ![ezgif com-video-to-gif](https://user-images.githubusercontent.com/55912590/222429580-993668df-366c-4404-b0c9-8c7af2fc46fe.gif)
 
++ Search for users (MongoDB Atlas Search)
 + Realtime chatting with others (WebSocket support)
 
 
