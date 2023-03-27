@@ -12,16 +12,19 @@
       </v-btn>
       <div class="browser__header__search">
         <input
-          type="text"
+          type="search"
           class="browser__header__input"
           placeholder="Search"
           :size="20"
           @input="search"
           v-model="query" />
         <v-icon class="browser__header__input-icon"> mdi-magnify </v-icon>
+        <v-icon v-if="query" class="browser__header__close-icon" @click="clearInput">
+          mdi-window-close
+        </v-icon>
       </div>
     </header>
-    <div class="browser__search">
+    <div class="browser__search" v-if="query">
       <search-link
         v-for="link in result"
         :image="link.profileImage"
@@ -66,6 +69,10 @@ const search = async () => {
     console.error(error.value.error);
   }
   result.value = response.value.result;
+};
+
+const clearInput = () => {
+  query.value = "";
 };
 </script>
 
@@ -117,15 +124,26 @@ const search = async () => {
     opacity: 0.7;
     font-weight: 300;
   }
+  &::-webkit-search-cancel-button {
+    position: relative;
+    right: 20px;
+  }
 }
 .browser__header__input-icon {
   position: absolute;
   top: 50%;
   transform: translate(50%, -50%);
   left: 5px;
-  width: 20px;
-  height: 20px;
   opacity: 0.5;
   font-size: 20px;
+}
+.browser__header__close-icon {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  right: 5px;
+  font-size: 15px;
+  opacity: 0.5;
+  cursor: pointer;
 }
 </style>
