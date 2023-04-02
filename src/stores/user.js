@@ -1,6 +1,7 @@
 import { reactive, toRefs } from "vue";
 import { defineStore } from "pinia";
 import useUser from "../composables/useUser.js";
+import useAuth from "../composables/useAuth.js";
 
 export const useUserStore = defineStore(
   "user",
@@ -10,10 +11,10 @@ export const useUserStore = defineStore(
     const profileImagePath = () => useUser.getImagePath(state.user.profileImage);
 
     const signIn = async (loginData) => {
-      const { data, error } = await useUser.login({ ...loginData });
+      const { data, error } = await useAuth.login({ ...loginData });
       if (error.value) {
-        const errorMessage = error.value.response.data.error;
-        throw new Error(errorMessage);
+        console.log(error.value);
+        throw new Error(error.value);
       }
       state.user = data.value.user;
       localStorage.setItem("token", data.value.token);
@@ -21,7 +22,7 @@ export const useUserStore = defineStore(
     };
 
     const signUp = async (registrationData) => {
-      const { data, error } = await useUser.register({ ...registrationData });
+      const { data, error } = await useAuth.register({ ...registrationData });
       if (error.value) {
         const errorMessage = error.value.response.data.error;
         throw new Error(errorMessage);
@@ -32,7 +33,7 @@ export const useUserStore = defineStore(
     };
 
     const logout = async () => {
-      const { error } = await useUser.logout();
+      const { error } = await useAuth.logout();
       if (error.value) {
         console.log(error.value);
         const errorMessage = error.value.error;
@@ -53,10 +54,9 @@ export const useUserStore = defineStore(
       const { data, error } = await useUser.update(formData);
 
       if (error.value) {
-        const errorMessage = error.value.response.data.error;
-        throw new Error(errorMessage);
+        throw new Error(error.value);
       }
-      state.user = data.value.user;
+      state.user = data.value;
       return state.user;
     };
     return { ...toRefs(state), signIn, signUp, update, logout, profileImagePath };

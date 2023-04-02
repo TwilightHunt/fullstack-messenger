@@ -12,17 +12,11 @@ const config = {
 };
 
 export default {
-  async update(data) {
+  async login(data) {
     const user = reactive({ data: {}, error: null, fetching: false });
-
-    const { response, error, fetching, fetchData } = useFetch("users/update", {
+    const { response, error, fetching, fetchData } = useFetch("auth/login", {
       ...config,
-      method: "PUT",
       data,
-      headers: {
-        "content-type": "multipart/form-data",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
     });
     await fetchData();
     user.data = response;
@@ -31,20 +25,25 @@ export default {
     return { ...toRefs(user) };
   },
 
-  async getUserByUsername(username) {
-    const user = reactive({ data: {}, error: null, fetching: false });
-    const { response, error, fetching, fetchData } = useFetch("users/user", {
+  async logout() {
+    const { error, fetchData } = useFetch("auth/logout", {
       ...config,
-      data: { username },
+      method: "GET",
+    });
+    await fetchData();
+    return { error };
+  },
+
+  async register(data) {
+    const user = reactive({ data: {}, error: null, fetching: false });
+    const { response, error, fetching, fetchData } = useFetch("auth/register", {
+      ...config,
+      data,
     });
     await fetchData();
     user.data = response;
     user.error = error;
     user.fetching = fetching;
     return { ...toRefs(user) };
-  },
-
-  getImagePath(filename) {
-    return `${import.meta.env.VITE_SERVER_URL}/${filename}`;
   },
 };

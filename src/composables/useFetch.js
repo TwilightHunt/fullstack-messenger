@@ -1,16 +1,13 @@
 import axios from "axios";
 import { reactive, toRefs } from "vue";
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
     const originalRequest = error.config;
-    if (
-      error.response.status === 401 &&
-      originalRequest.url !== `${baseUrl}/refresh`
-    ) {
+    if (error.request.status === 401 && originalRequest.url !== `${baseUrl}/refresh`) {
       try {
         axios
           .get(`${baseUrl}/refresh`, {
