@@ -7,10 +7,10 @@ axios.interceptors.response.use(
   (response) => response,
   (error) => {
     const originalRequest = error.config;
-    if (error.request.status === 401 && originalRequest.url !== `${baseUrl}/refresh`) {
+    if (error.request.status === 401 && originalRequest.url !== `${baseUrl}auth/refresh`) {
       try {
         axios
-          .get(`${baseUrl}/refresh`, {
+          .get(`${baseUrl}auth/refresh`, {
             withCredentials: true,
             credentials: "include",
           })

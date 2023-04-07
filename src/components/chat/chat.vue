@@ -25,7 +25,7 @@
     <div class="chat__body">
       <message
         v-for="message in history"
-        :mine="user.id === message.senter"
+        :mine="user._id === message.senter"
         :time="message.time"
         :key="message._id"
         >{{ message.text }}</message
@@ -135,7 +135,7 @@ watch(
   async (newValue) => {
     try {
       const { data: res } = await useUser.getUserByUsername(newValue);
-      data.receiver = res.value.user;
+      data.receiver = res.value;
       history.value = await useChats.getChatHistory(data.receiver.username);
       input.value.focus();
       setObserver();

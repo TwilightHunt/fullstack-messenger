@@ -43,7 +43,7 @@ const info = reactive({
 
 onMounted(async () => {
   const { data } = await useUser.getUserByUsername(props.chat.receiver);
-  info.user = data.value.user;
+  info.user = data.value;
   await updateChatPreview();
 });
 

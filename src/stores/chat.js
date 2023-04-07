@@ -40,7 +40,7 @@ export const useChatStore = defineStore(
         const errorMessage = error.value;
         throw new Error(errorMessage);
       }
-      return data.value.history;
+      return data.value;
     };
 
     return { ...toRefs(state), send, getChats, getChatHistory };

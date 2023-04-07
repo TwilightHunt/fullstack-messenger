@@ -2,7 +2,7 @@ import { reactive, toRefs } from "vue";
 import { useFetch } from "./useFetch.js";
 
 const config = {
-  method: "POST",
+  method: "GET",
   withCredentials: true,
   credentials: "include",
   headers: {
@@ -33,14 +33,14 @@ export default {
 
   async getUserByUsername(username) {
     const user = reactive({ data: {}, error: null, fetching: false });
-    const { response, error, fetching, fetchData } = useFetch("users/user", {
+    const { response, error, fetching, fetchData } = useFetch(`users/user?username=${username}`, {
       ...config,
       data: { username },
     });
     await fetchData();
-    user.data = response;
-    user.error = error;
-    user.fetching = fetching;
+    user.data = response.value;
+    user.error = error.value;
+    user.fetching = fetching.value;
     return { ...toRefs(user) };
   },
 
