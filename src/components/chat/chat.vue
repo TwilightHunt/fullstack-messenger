@@ -60,6 +60,7 @@
 <script setup>
 import { reactive, watch, ref } from "vue";
 import { useRoute } from "vue-router";
+import { socket } from "@/socket";
 
 import message from "./message.vue";
 import bubble from "../UI/bubbles/bubble.vue";
@@ -77,32 +78,23 @@ const route = useRoute();
 const useChats = useChatStore();
 
 const history = ref([]);
-const socket = ref();
 const input = ref();
 const target = ref();
 
 let currentOffset = 0;
 const offset = 20;
 
-socket.value = new WebSocket(import.meta.env.VITE_WS_URL);
+socket.on("connect", () => {
+  console.log("connected!");
+});
 
-socket.value.onopen = () => {
-  const message = {
-    event: "connect",
-    placeholder: {
-      id: user.value.id,
-    },
-  };
-  socket.value.send(JSON.stringify(message));
-};
-
-socket.value.onmessage = async (event) => {
-  const message = JSON.parse(event.data);
+socket.on("message", async (event) => {
+  const message = JSON.parse(event.content);
 
   if (message.event === "send") {
     history.value = await useChats.getChatHistory(data.receiver.username);
   }
-};
+});
 
 const data = reactive({
   message: "",
@@ -121,7 +113,8 @@ const sendMessage = async () => {
         message: data.message,
       },
     };
-    socket.value.send(JSON.stringify(message));
+
+    socket.emit("send", JSON.stringify(message));
     history.value = await useChats.getChatHistory(data.receiver.username);
     data.message = "";
     input.value.focus();

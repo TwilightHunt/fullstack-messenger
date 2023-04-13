@@ -33,7 +33,7 @@
         :key="link.username" />
     </div>
     <div class="browser__chats" v-if="!query">
-      <chatLink v-for="chat in chatStore.chats" :chat="chat" :key="chat.receiver" />
+      <chatLink v-for="chat in chatStore.chats" :chat="chat" :key="chat._id" />
     </div>
   </div>
 </template>

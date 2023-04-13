@@ -12,7 +12,7 @@ const config = {
 
 export default {
   async send(data) {
-    const { fetchData, error } = useFetch("/send", {
+    const { fetchData, error } = useFetch("chats/send", {
       ...config,
       data,
       method: "POST",

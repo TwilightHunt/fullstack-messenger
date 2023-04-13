@@ -22,11 +22,11 @@ export const useChatStore = defineStore(
         const errorMessage = error.value;
         throw new Error(errorMessage);
       }
-      state.chats = data.value.chats;
+      state.chats = data.value;
     };
 
     const getChatHistory = async (username, { offset, amount } = {}) => {
-      const chatId = state.chats.find((el) => el.receiver === username)?.id;
+      const chatId = state.chats.find((el) => el.receiver === username)?._id;
 
       if (!chatId) {
         return [];

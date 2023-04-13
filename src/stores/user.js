@@ -23,8 +23,9 @@ export const useUserStore = defineStore(
 
     const signUp = async (registrationData) => {
       const { data, error } = await useAuth.register({ ...registrationData });
+
       if (error.value) {
-        const errorMessage = error.value.response.data.error;
+        const errorMessage = error.value;
         throw new Error(errorMessage);
       }
       state.user = data.value.user;
