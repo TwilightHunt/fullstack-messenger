@@ -2,6 +2,8 @@
 
 Full-stack clone of Telegram messenger 
 
+Back: https://github.com/TwilightHunt/messenger-backend
+
 ## 🪄 Current features
 
 + The opportunity to login/register in the app
