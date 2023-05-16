@@ -230,7 +230,7 @@ const openOptions = (e) => {
   flex-direction: column-reverse;
   max-height: calc(100vh - 110px);
   background-size: cover;
-  background-image: url("@/assets/images/backgrounds/chat-bg-dark.jpg");
+  background-image: var(--chat-bg-img);
   @include scrollbar(#fff, $width: 0);
 }
 

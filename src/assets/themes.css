@@ -12,6 +12,9 @@
   --color-text: #000;
 
   --auth-bg-img: url("./images/backgrounds/background-light.jpg");
+  --chat-bg-img: url("./images/backgrounds/chat-bg-light.jpg");
+
+  --border: #00000025;
 }
 [data-theme="dark"] {
   --color-background: var(--vt-c-black);
@@ -25,4 +28,7 @@
   --color-text: #fff;
 
   --auth-bg-img: url("./images/backgrounds/background-dark.jpg");
+  --chat-bg-img: url("./images/backgrounds/chat-bg-dark.jpg");
+
+  --border: #ffffff25;
 }

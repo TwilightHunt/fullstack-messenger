@@ -78,7 +78,7 @@ const activateMenu = (e) => {
   background: var(--color-background-soft);
   border-radius: 5px 20px 20px 5px;
   padding: 10px 10px 10px 8px;
-  color: #fff;
+  color: var(--color-text);
 }
 .message__info {
   float: right;
@@ -111,6 +111,7 @@ const activateMenu = (e) => {
     margin-left: auto;
     border-radius: 20px 5px 5px 20px;
     padding: 10px;
+    color: #fff;
   }
   .message__info__state {
     font-size: 0.875rem;

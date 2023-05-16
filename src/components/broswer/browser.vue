@@ -86,7 +86,7 @@ const clearInput = () => {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  border-right: 1px solid #ffffff25;
+  border-right: 1px solid var(--border);
 }
 .browser__chats {
   @include scrollbar(#000);
