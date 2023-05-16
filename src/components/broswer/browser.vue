@@ -61,14 +61,14 @@ const result = ref();
 const query = ref();
 
 const search = async () => {
-  const { response, error, fetchData } = useFetch(`users/search?query=${query.value}`, {
+  const { response, error, fetching, fetchData } = useFetch(`/search/users?text=${query.value}`, {
     method: "GET",
   });
   await fetchData();
   if (error.value) {
     console.error(error.value.error);
   }
-  result.value = response.value;
+  result.value = response.value.result;
 };
 
 const clearInput = () => {

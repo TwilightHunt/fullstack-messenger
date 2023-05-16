@@ -2,24 +2,35 @@
   <div class="auth">
     <div class="auth-box">
       <div class="auth-box__wrapper">
-        <img src="../assets/images/telegram-logo-965.png" alt="logo" class="auth__logo" />
+        <img
+          src="../assets/images/telegram-logo-965.png"
+          alt="logo"
+          class="auth__logo"
+        />
         <div class="auth-box__title">Sign in to Messenger</div>
         <transition name="slider" mode="out-in">
-          <form v-if="$route.path === '/login'" class="auth-box__form" id="login">
-            <GoogleAuth />
+          <form
+            v-if="$route.path === '/login'"
+            class="auth-box__form"
+            id="login"
+          >
             <input
               type="text"
               class="auth-box__input"
               id="login"
               placeholder="Email or username"
-              v-model="loginData.login" />
+              v-model="loginData.login"
+            />
             <input
               type="password"
               class="auth-box__input"
               id="password_login"
               placeholder="Password"
-              v-model="loginData.password" />
-            <ActionBtn @click="onLogin" class="auth-box__button">Login</ActionBtn>
+              v-model="loginData.password"
+            />
+            <ActionBtn @click="onLogin" class="auth-box__button"
+              >Login</ActionBtn
+            >
             <router-link to="/register"
               ><ActionBtn class="auth-box__button_black"
                 >Create a new account</ActionBtn
@@ -27,32 +38,42 @@
             >
           </form>
 
-          <form class="auth-box__form" id="registration" v-else-if="$route.path === '/register'">
+          <form
+            class="auth-box__form"
+            id="registration"
+            v-else-if="$route.path === '/register'"
+          >
             <input
               type="text"
               class="auth-box__input"
               id="email"
               placeholder="Email"
-              v-model="registerData.email" />
+              v-model="registerData.email"
+            />
             <input
               type="text"
               class="auth-box__input"
               id="username"
               placeholder="Username"
-              v-model="registerData.username" />
+              v-model="registerData.username"
+            />
             <input
               type="password"
               class="auth-box__input"
               id="password_register"
               placeholder="Password"
-              v-model="registerData.password" />
+              v-model="registerData.password"
+            />
             <input
               type="password"
               class="auth-box__input"
               id="repeat-password"
               placeholder="Repeat password"
-              v-model="registerData.repeatPassword" />
-            <ActionBtn class="auth-box__button" @click="onRegister">Sign Up</ActionBtn>
+              v-model="registerData.repeatPassword"
+            />
+            <ActionBtn class="auth-box__button" @click="onRegister"
+              >Sign Up</ActionBtn
+            >
             <router-link to="/login"
               ><ActionBtn class="auth-box__button_black"
                 >Already have an account?</ActionBtn
@@ -69,7 +90,6 @@
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import ActionBtn from "../components/UI/action-btn.vue";
-import GoogleAuth from "../components/buttons/GoogleAuth.vue";
 
 import { useUserStore } from "../stores/user.js";
 const userStore = useUserStore();
