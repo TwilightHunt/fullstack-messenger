@@ -61,7 +61,7 @@ const result = ref();
 const query = ref();
 
 const search = async () => {
-  const { response, error, fetching, fetchData } = useFetch(`/search/users?text=${query.value}`, {
+  const { response, error, fetching, fetchData } = useFetch(`users/search?text=${query.value}`, {
     method: "GET",
   });
   await fetchData();
