@@ -151,7 +151,7 @@ const clearInput = () => {
     position: absolute;
     inset: 0;
     z-index: 7;
-    transition: transform 500ms ease-in-out;
+    transition: transform 300ms ease-in-out;
   }
 }
 </style>

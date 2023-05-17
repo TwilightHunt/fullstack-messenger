@@ -1,52 +1,54 @@
 <template>
-  <div class="menu _closed" v-click-outside="onClickOutside" ref="menu">
-    <div class="menu__content">
-      <header class="menu__header">
-        <img :src="profileImagePath()" class="menu__header__profile-image" />
+  <div class="menu _closed" @click="closeMenu" ref="menu">
+    <div class="menu__body">
+      <div class="menu__content">
+        <header class="menu__header">
+          <img :src="profileImagePath()" class="menu__header__profile-image" />
 
-        <div class="menu__header__options menu-options" @click="expandOptions">
-          <div class="menu-options__username">{{ user.username }}</div>
-          <v-icon class="menu-options__icon" :size="30"> mdi-chevron-down </v-icon>
+          <div class="menu__header__options menu-options" @click="expandOptions">
+            <div class="menu-options__username">{{ user.username }}</div>
+            <v-icon class="menu-options__icon" :size="30"> mdi-chevron-down </v-icon>
+          </div>
+        </header>
+        <span class="menu__separator"></span>
+        <div class="menu__wrapped-options">
+          <menuLink :color="accentColor" :icon="'mdi-plus'" rounded>Add Account</menuLink>
         </div>
-      </header>
-      <span class="menu__separator"></span>
-      <div class="menu__wrapped-options">
-        <menuLink :color="accentColor" :icon="'mdi-plus'" rounded>Add Account</menuLink>
+        <span class="menu__separator"></span>
+        <div class="menu__setings">
+          <menuLink
+            :color="'#56B3F5'"
+            :icon="'mdi-account-multiple'"
+            @action="openPopup('newGroupPopup')"
+            >New Group</menuLink
+          >
+          <menuLink :color="'#ED9F20'" :icon="'mdi-bullhorn'" @action="openPopup('newChannelPopup')"
+            >New Channel</menuLink
+          >
+          <menuLink :color="'#F06964'" :icon="'mdi-account'" @action="openPopup('contactsPopup')"
+            >Contacts</menuLink
+          >
+          <menuLink :color="'#6DC534'" :icon="'mdi-phone'" @action="openPopup('callsPopup')"
+            >Calls</menuLink
+          >
+          <menuLink :color="'#56B3F5'" :icon="'mdi-bookmark'">Saved Messages</menuLink>
+          <menuLink :color="'#B580E2'" :icon="'mdi-cog'" @action="openPopup('settingsPopup')"
+            >Settings</menuLink
+          >
+          <menuLink
+            :color="'#7595FF'"
+            :icon="'mdi-moon-waning-crescent'"
+            :withSlider="true"
+            :checked="currentTheme === 'dark'"
+            @action="toggleTheme"
+            >Night Mode</menuLink
+          >
+        </div>
+        <footer class="menu__footer">
+          <div class="menu__footer__title">Messenger Web</div>
+          <div class="menu__footer__version">Version 1.0.0 - About</div>
+        </footer>
       </div>
-      <span class="menu__separator"></span>
-      <div class="menu__setings">
-        <menuLink
-          :color="'#56B3F5'"
-          :icon="'mdi-account-multiple'"
-          @action="openPopup('newGroupPopup')"
-          >New Group</menuLink
-        >
-        <menuLink :color="'#ED9F20'" :icon="'mdi-bullhorn'" @action="openPopup('newChannelPopup')"
-          >New Channel</menuLink
-        >
-        <menuLink :color="'#F06964'" :icon="'mdi-account'" @action="openPopup('contactsPopup')"
-          >Contacts</menuLink
-        >
-        <menuLink :color="'#6DC534'" :icon="'mdi-phone'" @action="openPopup('callsPopup')"
-          >Calls</menuLink
-        >
-        <menuLink :color="'#56B3F5'" :icon="'mdi-bookmark'">Saved Messages</menuLink>
-        <menuLink :color="'#B580E2'" :icon="'mdi-cog'" @action="openPopup('settingsPopup')"
-          >Settings</menuLink
-        >
-        <menuLink
-          :color="'#7595FF'"
-          :icon="'mdi-moon-waning-crescent'"
-          :withSlider="true"
-          :checked="currentTheme === 'dark'"
-          @action="toggleTheme"
-          >Night Mode</menuLink
-        >
-      </div>
-      <footer class="menu__footer">
-        <div class="menu__footer__title">Messenger Web</div>
-        <div class="menu__footer__version">Version 1.0.0 - About</div>
-      </footer>
     </div>
   </div>
 </template>
@@ -67,15 +69,11 @@ const { setActivePopup } = usePopups();
 
 const currentTheme = ref(localStorage.getItem("theme"));
 
-const onClickOutside = (event) => {
-  if (!event.target.className.includes("browser__header__burger")) {
-    closeMenu();
-  }
-};
-
-const closeMenu = () => {
+const closeMenu = (event) => {
   const menu = document.querySelector(".menu");
-  menu.classList.add("_closed");
+  if (event.target === menu) {
+    menu.classList.add("_closed");
+  }
 };
 
 const expandOptions = () => {
@@ -102,17 +100,39 @@ const openPopup = (name) => {
 </script>
 
 <style lang="scss" scoped>
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 300%;
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
 .menu {
+  background-color: rgba(#000, 0.6);
   position: absolute;
+  inset: 0;
   z-index: 10;
+  backdrop-filter: blur(2px);
+  transition: all 0.2s ease;
+  &._closed {
+    visibility: hidden;
+    opacity: 0;
+    & .menu__body {
+      transform: translateX(-100%);
+    }
+  }
+}
+.menu__body {
+  position: relative;
   top: 0;
   bottom: 0;
   width: 340px;
   background-color: var(--color-background-mute);
   transition: all 0.2s ease-in;
-  &._closed {
-    transform: translateX(-100%);
-  }
 }
 .menu__content {
   display: flex;
