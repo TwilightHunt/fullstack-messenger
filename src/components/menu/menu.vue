@@ -4,7 +4,6 @@
       <div class="menu__content">
         <header class="menu__header">
           <img :src="profileImagePath()" class="menu__header__profile-image" />
-
           <div class="menu__header__options menu-options" @click="expandOptions">
             <div class="menu-options__username">{{ user.username }}</div>
             <v-icon class="menu-options__icon" :size="30"> mdi-chevron-down </v-icon>
@@ -94,7 +93,7 @@ const toggleTheme = () => {
 };
 
 const openPopup = (name) => {
-  closeMenu();
+  document.querySelector(".menu").classList.add("_closed");
   setActivePopup(name);
 };
 </script>
