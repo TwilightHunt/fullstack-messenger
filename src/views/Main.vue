@@ -49,6 +49,7 @@ export default {
 .main-page {
   display: flex;
   overflow: hidden;
+  min-height: 100svh;
 }
 @keyframes appear {
   0% {

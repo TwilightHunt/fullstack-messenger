@@ -138,7 +138,6 @@ watch(
   () => route.params.chat,
   async (newValue) => {
     try {
-      console.log(newValue);
       const { data: res } = await useUser.getUserByUsername(newValue);
       data.receiver = res.value;
       history.value = await useChats.getChatHistory(data.receiver.username);
@@ -251,6 +250,7 @@ const openMenu = () => {
   background-size: cover;
   background-image: var(--chat-bg-img);
   @include scrollbar(#fff, $width: 0);
+  background-position: center;
 }
 
 .chat__type-footer {

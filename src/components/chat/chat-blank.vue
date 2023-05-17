@@ -14,5 +14,6 @@ import chatState from "./chat-state.vue";
   background: var(--chat-bg-img);
   background-size: cover;
   display: flex;
+  background-position: center;
 }
 </style>

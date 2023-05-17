@@ -1,5 +1,5 @@
 <template>
-  <routerLink :to="`chat=${chat.receiver}`" class="chat-link">
+  <RouterLink :to="`chat=${chat.receiver}`" class="chat-link" @click="goToChat">
     <img :src="useUser.getImagePath(info.user?.profileImage)" class="chat-link__image" />
     <div class="chat-link__body">
       <div class="chat-link__top">
@@ -18,11 +18,11 @@
         <!-- <v-icon class="chat-link__pin" size="15">mdi-pin</v-icon> -->
       </div>
     </div>
-  </routerLink>
+  </RouterLink>
 </template>
 
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import useUser from "../../composables/useUser.js";
 import { useChatStore } from "../../stores/chat.js";
 import { formatTime } from "../../composables/useDate.js";
@@ -51,6 +51,13 @@ const updateChatPreview = async () => {
   const lastMessage = await getChatHistory(info.user.username, { amount: 1 });
   info.lastMessage.time = formatTime(lastMessage[0].time);
   info.lastMessage.text = lastMessage[0].text;
+};
+
+const goToChat = () => {
+  if (window.screen.width <= 1160) {
+    const browser = document.querySelector(".browser");
+    browser.style.transform = "translateX(-100%)";
+  }
 };
 </script>
 

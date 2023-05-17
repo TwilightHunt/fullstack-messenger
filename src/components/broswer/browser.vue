@@ -150,15 +150,8 @@ const clearInput = () => {
   .browser {
     position: absolute;
     inset: 0;
-    transform: translateX(-100%);
-    z-index: 10;
+    z-index: 7;
     transition: transform 500ms ease-in-out;
-  }
-  .browser__header__burger-button {
-    display: none;
-  }
-  .browser__header__search {
-    margin: 0;
   }
 }
 </style>

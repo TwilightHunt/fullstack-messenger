@@ -6,16 +6,12 @@
 
         <div class="menu__header__options menu-options" @click="expandOptions">
           <div class="menu-options__username">{{ user.username }}</div>
-          <v-icon class="menu-options__icon" :size="30">
-            mdi-chevron-down
-          </v-icon>
+          <v-icon class="menu-options__icon" :size="30"> mdi-chevron-down </v-icon>
         </div>
       </header>
       <span class="menu__separator"></span>
       <div class="menu__wrapped-options">
-        <menuLink :color="accentColor" :icon="'mdi-plus'" rounded
-          >Add Account</menuLink
-        >
+        <menuLink :color="accentColor" :icon="'mdi-plus'" rounded>Add Account</menuLink>
       </div>
       <span class="menu__separator"></span>
       <div class="menu__setings">
@@ -25,31 +21,17 @@
           @action="openPopup('newGroupPopup')"
           >New Group</menuLink
         >
-        <menuLink
-          :color="'#ED9F20'"
-          :icon="'mdi-bullhorn'"
-          @action="openPopup('newChannelPopup')"
+        <menuLink :color="'#ED9F20'" :icon="'mdi-bullhorn'" @action="openPopup('newChannelPopup')"
           >New Channel</menuLink
         >
-        <menuLink
-          :color="'#F06964'"
-          :icon="'mdi-account'"
-          @action="openPopup('contactsPopup')"
+        <menuLink :color="'#F06964'" :icon="'mdi-account'" @action="openPopup('contactsPopup')"
           >Contacts</menuLink
         >
-        <menuLink
-          :color="'#6DC534'"
-          :icon="'mdi-phone'"
-          @action="openPopup('callsPopup')"
+        <menuLink :color="'#6DC534'" :icon="'mdi-phone'" @action="openPopup('callsPopup')"
           >Calls</menuLink
         >
-        <menuLink :color="'#56B3F5'" :icon="'mdi-bookmark'"
-          >Saved Messages</menuLink
-        >
-        <menuLink
-          :color="'#B580E2'"
-          :icon="'mdi-cog'"
-          @action="openPopup('settingsPopup')"
+        <menuLink :color="'#56B3F5'" :icon="'mdi-bookmark'">Saved Messages</menuLink>
+        <menuLink :color="'#B580E2'" :icon="'mdi-cog'" @action="openPopup('settingsPopup')"
           >Settings</menuLink
         >
         <menuLink
@@ -122,7 +104,7 @@ const openPopup = (name) => {
 <style lang="scss" scoped>
 .menu {
   position: absolute;
-  z-index: 5;
+  z-index: 10;
   top: 0;
   bottom: 0;
   width: 340px;
