@@ -1,5 +1,5 @@
 <template>
-  <div class="browser">
+  <div ref="browser" class="browser">
     <header class="browser__header">
       <v-btn
         flat
@@ -81,7 +81,6 @@ const clearInput = () => {
 
 .browser {
   background-color: var(--color-background-soft);
-  //width: 20vw;
   flex: 0 0 20%;
   display: flex;
   flex-direction: column;
@@ -145,5 +144,21 @@ const clearInput = () => {
   font-size: 15px;
   opacity: 0.5;
   cursor: pointer;
+}
+
+@media (max-width: 1160px) {
+  .browser {
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    z-index: 10;
+    transition: transform 500ms ease-in-out;
+  }
+  .browser__header__burger-button {
+    display: none;
+  }
+  .browser__header__search {
+    margin: 0;
+  }
 }
 </style>

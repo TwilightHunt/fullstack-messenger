@@ -1,6 +1,15 @@
 <template>
   <div v-if="route.params.chat" class="chat">
     <header class="chat__header">
+      <v-btn
+        flat
+        color="transparent"
+        icon
+        class="chat__header__burger-button"
+        :size="40"
+        @click="openMenu">
+        <v-icon class="chat__header__burger-icon"> mdi-arrow-left </v-icon>
+      </v-btn>
       <div class="chat__header__title">
         <img
           :src="useUser.getImagePath(data.receiver.profileImage)"
@@ -55,6 +64,7 @@
       </div>
     </div>
   </div>
+  <chat-blank v-else />
 </template>
 
 <script setup>
@@ -65,6 +75,7 @@ import { socket } from "@/socket";
 import message from "./message.vue";
 import bubble from "../UI/bubbles/bubble.vue";
 import chatState from "./chat-state.vue";
+import chatBlank from "./chat-blank.vue";
 
 import { useChatStore } from "../../stores/chat.js";
 import { storeToRefs } from "pinia";
@@ -127,6 +138,7 @@ watch(
   () => route.params.chat,
   async (newValue) => {
     try {
+      console.log(newValue);
       const { data: res } = await useUser.getUserByUsername(newValue);
       data.receiver = res.value;
       history.value = await useChats.getChatHistory(data.receiver.username);
@@ -175,6 +187,11 @@ const openOptions = (e) => {
     }
   });
 };
+
+const openMenu = () => {
+  const browser = document.querySelector(".browser");
+  browser.style.transform = "translateX(0)";
+};
 </script>
 
 <style lang="scss" scoped>
@@ -204,6 +221,8 @@ const openOptions = (e) => {
 .chat__header__title {
   display: flex;
   align-items: center;
+  margin-right: auto;
+  margin-left: 15px;
 }
 .chat__header__avatar {
   height: 40px;
@@ -258,6 +277,9 @@ const openOptions = (e) => {
 .chat__type-footer__action_voice {
   right: 0;
 }
+.chat__header__burger-button {
+  display: none;
+}
 .chat__type-footer__action_emoji {
   left: 30px;
 }
@@ -284,6 +306,15 @@ const openOptions = (e) => {
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@media (max-width: 1160px) {
+  .chat__header {
+    padding-left: 5px;
+  }
+  .chat__header__burger-button {
+    display: block;
   }
 }
 </style>
